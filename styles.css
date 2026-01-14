@@ -753,7 +753,7 @@ blockquote cite {
 /* Synthesis Toggle Button (sticky bottom) */
 .synthesis-toggle-btn {
     position: fixed;
-    bottom: 48px;
+    bottom: 72px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 98;
@@ -767,7 +767,8 @@ blockquote cite {
     text-transform: uppercase;
     transition: opacity 0.2s ease;
     display: none;
-    border-radius: 8px;
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="light"] .synthesis-toggle-btn {
