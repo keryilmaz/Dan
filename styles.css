@@ -218,6 +218,13 @@ h6 {
     margin-bottom: 24px;
 }
 
+.article-title {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    opacity: 0.8;
+}
+
 p {
     font-size: 12px;
     margin-bottom: 16px;
