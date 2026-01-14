@@ -638,66 +638,198 @@
 
         exportBtn.addEventListener('click', () => {
             const data = gatherAllResponses();
-            const text = formatExport(data);
-            downloadText(text, 'the-protocol.txt');
+            const markdown = formatExportMarkdown(data);
+            downloadText(markdown, 'the-protocol.md');
         });
     }
 
     function gatherAllResponses() {
         const data = {};
+        
+        // Gather all text responses
         document.querySelectorAll('.response, .response-line').forEach(input => {
             const key = input.dataset.save;
-            if (key) {
-                data[key] = input.value;
+            if (key && input.value.trim()) {
+                data[key] = input.value.trim();
             }
         });
+        
+        // Gather reminder times
+        const reminders = [];
+        document.querySelectorAll('.custom-time-picker').forEach((picker, index) => {
+            const hourSelect = picker.querySelector('.time-hour');
+            const minuteSelect = picker.querySelector('.time-minute');
+            if (hourSelect && minuteSelect) {
+                const time = `${hourSelect.value}:${minuteSelect.value}`;
+                const question = picker.nextElementSibling?.textContent || `Reminder ${index + 1}`;
+                reminders.push({ time, question });
+            }
+        });
+        data.reminders = reminders;
+        
         return data;
     }
 
-    function formatExport(data) {
-        const date = new Date().toLocaleDateString();
-        let text = `THE PROTOCOL\n`;
-        text += `Completed: ${date}\n`;
-        text += `${'='.repeat(50)}\n\n`;
-
-        text += `ANTI-VISION\n${data['antivision-statement'] || '—'}\n\n`;
-        text += `VISION\n${data['vision-statement'] || '—'}\n\n`;
-
-        text += `${'='.repeat(50)}\n\n`;
-
-        const labels = {
-            'q1': 'Dull dissatisfaction',
-            'q2': 'Repeated complaints',
-            'q3': 'What behavior reveals',
-            'q4': 'Unbearable truth',
-            'q5': 'Five years unchanged',
-            'q6': 'Ten years missed',
-            'q7': 'End of life cost',
-            'q8': 'Who lives this future',
-            'q9': 'Identity to give up',
-            'q10': 'Embarrassing reason',
-            'q11': 'Self-protection',
-            'q12': 'Three year vision',
-            'q13': 'Identity statement',
-            'day-insights': 'Day insights',
-            's1': 'Why stuck',
-            's2': 'The enemy',
-            's3': 'One year lens',
-            's4': 'One month lens',
-            's5': 'Tomorrow actions'
-        };
-
-        Object.entries(labels).forEach(([key, label]) => {
-            if (data[key]) {
-                text += `${label.toUpperCase()}\n${data[key]}\n\n`;
-            }
+    function formatExportMarkdown(data) {
+        const date = new Date().toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
         });
+        
+        let md = `# The Protocol by Dan Koe\n\n`;
+        md += `**Completed:** ${date}\n\n`;
+        md += `---\n\n`;
 
-        return text;
+        // Anti-Vision & Vision
+        md += `## Anti-Vision & Vision\n\n`;
+        md += `### Anti-Vision\n\n`;
+        md += `${data['antivision-statement'] ? data['antivision-statement'] : '*Not completed*'}\n\n`;
+        md += `### Vision\n\n`;
+        md += `${data['vision-statement'] ? data['vision-statement'] : '*Not completed*'}\n\n`;
+        md += `---\n\n`;
+
+        // Part 1: Excavation
+        if (data['q1'] || data['q2'] || data['q3'] || data['q4']) {
+            md += `## Part 1: Excavation\n\n`;
+            
+            if (data['q1']) {
+                md += `### What is the dull, persistent dissatisfaction you've learned to live with?\n\n`;
+                md += `${data['q1']}\n\n`;
+            }
+            
+            if (data['q2']) {
+                md += `### What do you complain about repeatedly but never change?\n\n`;
+                md += `${data['q2']}\n\n`;
+            }
+            
+            if (data['q3']) {
+                md += `### For each complaint: What would an observer conclude you actually want?\n\n`;
+                md += `${data['q3']}\n\n`;
+            }
+            
+            if (data['q4']) {
+                md += `### What truth about your life would be unbearable to admit to someone you respect?\n\n`;
+                md += `${data['q4']}\n\n`;
+            }
+            
+            md += `---\n\n`;
+        }
+
+        // Part 2: Anti-Vision
+        if (data['q5'] || data['q6'] || data['q7'] || data['q8']) {
+            md += `## Part 2: Anti-Vision\n\n`;
+            
+            if (data['q5']) {
+                md += `### If nothing changes for five years, describe an average Tuesday.\n\n`;
+                md += `${data['q5']}\n\n`;
+            }
+            
+            if (data['q6']) {
+                md += `### Now ten years. What have you missed?\n\n`;
+                md += `${data['q6']}\n\n`;
+            }
+            
+            if (data['q7']) {
+                md += `### End of life. You lived the safe version. What was the cost?\n\n`;
+                md += `${data['q7']}\n\n`;
+            }
+            
+            if (data['q8']) {
+                md += `### Who is already living this future you described?\n\n`;
+                md += `${data['q8']}\n\n`;
+            }
+            
+            md += `---\n\n`;
+        }
+
+        // Part 3: Vision
+        if (data['q9'] || data['q10'] || data['q11'] || data['q12'] || data['q13']) {
+            md += `## Part 3: Vision\n\n`;
+            
+            if (data['q9']) {
+                md += `### What identity would you have to give up to actually change?\n\n`;
+                md += `${data['q9']}\n\n`;
+            }
+            
+            if (data['q10']) {
+                md += `### What is the most embarrassing reason you haven't changed?\n\n`;
+                md += `${data['q10']}\n\n`;
+            }
+            
+            if (data['q11']) {
+                md += `### If your behavior is self-protection, what exactly are you protecting?\n\n`;
+                md += `${data['q11']}\n\n`;
+            }
+            
+            if (data['q12']) {
+                md += `### Three years from now, what do you actually want?\n\n`;
+                md += `${data['q12']}\n\n`;
+            }
+            
+            if (data['q13']) {
+                md += `### What would you have to believe about yourself for that life to feel natural?\n\n`;
+                md += `${data['q13']}\n\n`;
+            }
+            
+            md += `---\n\n`;
+        }
+
+        // Part 4: Interrupt Autopilot
+        if (data.reminders && data.reminders.length > 0) {
+            md += `## Part 4: Interrupt Autopilot\n\n`;
+            md += `### Scheduled Reminders\n\n`;
+            data.reminders.forEach((reminder, index) => {
+                md += `**${reminder.time}** - ${reminder.question}\n\n`;
+            });
+            md += `---\n\n`;
+        }
+
+        if (data['day-insights']) {
+            md += `### Day Insights\n\n`;
+            md += `${data['day-insights']}\n\n`;
+            md += `---\n\n`;
+        }
+
+        // Part 5: Synthesis
+        if (data['s1'] || data['s2'] || data['s3'] || data['s4'] || data['s5']) {
+            md += `## Part 5: Synthesis\n\n`;
+            
+            if (data['s1']) {
+                md += `### After today, what feels most true about why you've been stuck?\n\n`;
+                md += `${data['s1']}\n\n`;
+            }
+            
+            if (data['s2']) {
+                md += `### What is the actual enemy?\n\n`;
+                md += `${data['s2']}\n\n`;
+            }
+            
+            if (data['s3']) {
+                md += `### One-year lens: What would have to be true for you to know you've broken the pattern?\n\n`;
+                md += `${data['s3']}\n\n`;
+            }
+            
+            if (data['s4']) {
+                md += `### One-month lens: What would have to be true for the one-year to remain possible?\n\n`;
+                md += `${data['s4']}\n\n`;
+            }
+            
+            if (data['s5']) {
+                md += `### Tomorrow: What are 2-3 actions the person you're becoming would simply do?\n\n`;
+                md += `${data['s5']}\n\n`;
+            }
+        }
+
+        md += `\n---\n\n`;
+        md += `*This is just the beginning. Movement is what matters now.*\n\n`;
+        md += `*Generated by The Protocol by Dan Koe*\n`;
+
+        return md;
     }
 
     function downloadText(text, filename) {
-        const blob = new Blob([text], { type: 'text/plain' });
+        const blob = new Blob([text], { type: 'text/markdown' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
