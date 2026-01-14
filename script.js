@@ -524,6 +524,30 @@
 
         if (!activateBtn) return;
 
+        // Setup time picker change handlers
+        document.querySelectorAll('.custom-time-picker').forEach(picker => {
+            const reminderId = picker.dataset.reminder;
+            const hourSelect = picker.querySelector('.time-hour');
+            const minuteSelect = picker.querySelector('.time-minute');
+            
+            // Load saved time
+            const savedTime = localStorage.getItem(`protocol-reminder-${reminderId}`);
+            if (savedTime) {
+                const [hours, minutes] = savedTime.split(':');
+                hourSelect.value = hours.padStart(2, '0');
+                minuteSelect.value = minutes.padStart(2, '0');
+            }
+            
+            // Save on change
+            const saveTime = () => {
+                const time = `${hourSelect.value}:${minuteSelect.value}`;
+                localStorage.setItem(`protocol-reminder-${reminderId}`, time);
+            };
+            
+            hourSelect.addEventListener('change', saveTime);
+            minuteSelect.addEventListener('change', saveTime);
+        });
+
         activateBtn.addEventListener('click', async () => {
             if ('Notification' in window) {
                 const permission = await Notification.requestPermission();
@@ -546,7 +570,7 @@
     }
 
     function scheduleReminders() {
-        const timeInputs = document.querySelectorAll('.time-input');
+        const timePickers = document.querySelectorAll('.custom-time-picker');
         const questions = [
             'What am I avoiding right now?',
             'If someone filmed the last two hours, what would they conclude I want?',
@@ -556,8 +580,11 @@
             'When did I feel most alive today? When did I feel most dead?'
         ];
 
-        timeInputs.forEach((input, index) => {
-            const [hours, minutes] = input.value.split(':').map(Number);
+        timePickers.forEach((picker, index) => {
+            const hourSelect = picker.querySelector('.time-hour');
+            const minuteSelect = picker.querySelector('.time-minute');
+            const hours = parseInt(hourSelect.value);
+            const minutes = parseInt(minuteSelect.value);
             const now = new Date();
             const reminderTime = new Date();
             reminderTime.setHours(hours, minutes, 0, 0);

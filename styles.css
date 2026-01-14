@@ -649,57 +649,62 @@ blockquote cite {
     color: var(--muted);
 }
 
-.time-input {
+.custom-time-picker {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.time-hour,
+.time-minute {
     padding: 8px;
     font-family: inherit;
     font-size: 14px;
     background: #222;
     color: var(--fg);
     border: none;
-    text-transform: uppercase;
     appearance: none;
     -webkit-appearance: none;
     border-radius: 2px;
     cursor: pointer;
+    text-transform: uppercase;
+    min-width: 50px;
 }
 
-[data-theme="light"] .time-input {
+[data-theme="light"] .time-hour,
+[data-theme="light"] .time-minute {
     background: #ddd;
     color: var(--fg);
 }
 
-.time-input:focus {
+.time-hour:focus,
+.time-minute:focus {
     outline: none;
     background: #2a2a2a;
 }
 
-[data-theme="light"] .time-input:focus {
+[data-theme="light"] .time-hour:focus,
+[data-theme="light"] .time-minute:focus {
     background: #d0d0d0;
 }
 
-/* Style time input picker dropdown */
-.time-input::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    cursor: pointer;
-    opacity: 0.7;
+.time-separator {
+    color: var(--fg);
+    opacity: 0.6;
+    font-size: 14px;
 }
 
-[data-theme="light"] .time-input::-webkit-calendar-picker-indicator {
-    filter: none;
-    opacity: 0.7;
-}
-
-/* Remove default time input styling */
-.time-input::-webkit-datetime-edit-text,
-.time-input::-webkit-datetime-edit-hour-field,
-.time-input::-webkit-datetime-edit-minute-field {
+/* Style select dropdown options */
+.time-hour option,
+.time-minute option {
+    background: #222;
     color: var(--fg);
 }
 
-.time-input::-webkit-inner-spin-button,
-.time-input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+[data-theme="light"] .time-hour option,
+[data-theme="light"] .time-minute option {
+    background: #ddd;
+    color: var(--fg);
 }
 
 /* Interrupts Grid */
