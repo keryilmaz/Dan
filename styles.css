@@ -515,11 +515,7 @@ blockquote cite {
 
 /* Protocol Overview */
 .protocol-overview {
-    background: #000;
-}
-
-[data-theme="light"] .protocol-overview {
-    background: #fff;
+    background: transparent;
 }
 
 .protocol-intro {
