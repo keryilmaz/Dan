@@ -1,632 +1,575 @@
-// ============================================================================
-// THE PROTOCOL - Interactive Journey
-// ============================================================================
+// The Protocol - Two Mode Experience
+// Learn: Read the philosophy | Execute: Interactive protocol
 
-class ProtocolApp {
-    constructor() {
-        this.currentSection = 'intro';
-        this.reminders = [];
-        this.reminderIntervals = [];
-        this.init();
+(function() {
+    'use strict';
+
+    // State
+    let currentMode = 'learn';
+
+    // Elements
+    const synthesisModal = document.getElementById('synthesis-modal');
+    const synthesisToggleBtn = document.getElementById('synthesis-toggle-btn');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalClose = document.getElementById('modal-close');
+    const synthesisAntivision = document.getElementById('synthesis-antivision');
+    const synthesisVision = document.getElementById('synthesis-vision');
+    const learnMode = document.getElementById('learn-mode');
+    const executeMode = document.getElementById('execute-mode');
+    const modeBtns = document.querySelectorAll('.mode-btn');
+
+    // Initialize
+    function init() {
+        setupTheme();
+        setupModeToggle();
+        setupSynthesisToggle();
+        setupReset();
+        loadSavedResponses();
+        setupCommitment();
+        setupProgressiveReveal();
+        setupAutoSave();
+        setupInterrupts();
+        setupExport();
+        restoreMode();
     }
 
-    init() {
-        this.setupNavigation();
-        this.setupCommitmentCheck();
-        this.setupConceptCards();
-        this.setupProtocolTabs();
-        this.setupTextareas();
-        this.setupReminders();
-        this.setupExport();
-        this.loadSavedData();
-        this.updateProgress();
-    }
-
-    // ========================================================================
-    // NAVIGATION
-    // ========================================================================
-
-    setupNavigation() {
-        // Nav links
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const section = link.dataset.section;
-                this.navigateTo(section);
-            });
+    // Synthesis Modal
+    function setupSynthesisToggle() {
+        // Open modal
+        synthesisToggleBtn?.addEventListener('click', () => {
+            synthesisModal?.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
 
-        // Begin button
-        const beginBtn = document.getElementById('begin-btn');
-        if (beginBtn) {
-            beginBtn.addEventListener('click', () => {
-                this.navigateTo('concepts');
-            });
+        // Close modal
+        modalClose?.addEventListener('click', () => {
+            closeModal();
+        });
+
+        modalBackdrop?.addEventListener('click', () => {
+            closeModal();
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && synthesisModal?.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    }
+
+    function closeModal() {
+        synthesisModal?.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Theme Toggle
+    function setupTheme() {
+        const themeBtn = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('protocol-theme') || 'dark';
+        
+        // Apply saved theme
+        if (savedTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
         }
 
-        // Navigation buttons
-        document.querySelectorAll('.nav-btn').forEach(btn => {
+        // Toggle theme on click
+        themeBtn?.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('protocol-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('protocol-theme', 'light');
+            }
+        });
+    }
+
+    // Mode Toggle
+    function setupModeToggle() {
+        modeBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                const next = btn.dataset.next;
-                this.navigateTo(next);
+                const mode = btn.dataset.mode;
+                switchMode(mode);
             });
         });
 
-        // Setup reminders button
-        const setupRemindersBtn = document.getElementById('setup-reminders-btn');
-        if (setupRemindersBtn) {
-            setupRemindersBtn.addEventListener('click', () => {
-                this.navigateTo('protocol');
-                // Switch to day tab
-                const dayTab = document.querySelector('[data-tab="day"]');
-                if (dayTab) dayTab.click();
-            });
-        }
-    }
-
-    navigateTo(sectionId) {
-        // Hide all sections
-        document.querySelectorAll('.section').forEach(section => {
-            section.classList.remove('active');
+        // Start execute buttons in learn mode
+        document.getElementById('start-execute')?.addEventListener('click', () => {
+            switchMode('execute');
+        });
+        document.getElementById('start-execute-bottom')?.addEventListener('click', () => {
+            switchMode('execute');
         });
 
-        // Show target section
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.classList.add('active');
-            this.currentSection = sectionId;
-            window.scrollTo(0, 0);
-            this.updateProgress();
+        // Scroll down button
+        document.getElementById('scroll-to-learn')?.addEventListener('click', () => {
+            const firstSection = document.querySelector('#learn-mode .learn-section:nth-child(2)');
+            if (firstSection) {
+                firstSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    function switchMode(mode) {
+        currentMode = mode;
+        localStorage.setItem('protocol-mode', mode);
+
+        // Update buttons
+        modeBtns.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.mode === mode);
+        });
+
+        // Update content
+        if (mode === 'learn') {
+            learnMode.classList.add('active');
+            executeMode.classList.remove('active');
+            synthesisToggleBtn?.classList.remove('visible');
+            closeModal();
+        } else {
+            learnMode.classList.remove('active');
+            executeMode.classList.add('active');
+            // Show synthesis toggle button if data exists
+            const savedAntivision = localStorage.getItem('protocol-antivision-statement');
+            const savedVision = localStorage.getItem('protocol-vision-statement');
+            if (savedAntivision || savedVision) {
+                synthesisToggleBtn?.classList.add('visible');
+            } else {
+                synthesisToggleBtn?.classList.remove('visible');
+            }
+        }
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function restoreMode() {
+        const saved = localStorage.getItem('protocol-mode');
+        if (saved) {
+            switchMode(saved);
         }
     }
 
-    updateProgress() {
-        const sections = ['intro', 'concepts', 'protocol', 'gameplan'];
-        const currentIndex = sections.indexOf(this.currentSection);
-        const progress = ((currentIndex + 1) / sections.length) * 100;
+    // Reset
+    function setupReset() {
+        const resetBtn = document.getElementById('reset-btn');
+        if (!resetBtn) return;
 
-        const progressFill = document.querySelector('.progress-fill');
-        if (progressFill) {
-            progressFill.style.width = `${progress}%`;
-        }
-    }
+        resetBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to reset? All your answers will be deleted.')) {
+                // Clear all protocol data from localStorage
+                const keysToRemove = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith('protocol-')) {
+                        keysToRemove.push(key);
+                    }
+                }
+                keysToRemove.forEach(key => localStorage.removeItem(key));
 
-    // ========================================================================
-    // COMMITMENT CHECK
-    // ========================================================================
+                // Reset all form fields
+                document.querySelectorAll('#execute-mode .response, #execute-mode .response-line').forEach(input => {
+                    input.value = '';
+                });
 
-    setupCommitmentCheck() {
-        const checkbox = document.getElementById('commitment');
-        const beginBtn = document.getElementById('begin-btn');
-
-        if (checkbox && beginBtn) {
-            checkbox.addEventListener('change', () => {
-                beginBtn.disabled = !checkbox.checked;
-            });
-        }
-    }
-
-    // ========================================================================
-    // CONCEPT CARDS
-    // ========================================================================
-
-    setupConceptCards() {
-        document.querySelectorAll('.concept-card').forEach(card => {
-            const expandBtn = card.querySelector('.expand-btn');
-            const content = card.querySelector('.concept-content');
-
-            if (expandBtn && content) {
-                expandBtn.addEventListener('click', () => {
-                    const isActive = content.classList.contains('active');
-
-                    if (isActive) {
-                        content.classList.remove('active');
-                        expandBtn.textContent = 'Explore ↓';
+                // Hide all revealed sections and show only intro
+                document.querySelectorAll('#execute-mode .block').forEach(block => {
+                    if (block.id === 'block-intro') {
+                        block.classList.remove('hidden');
                     } else {
-                        content.classList.add('active');
-                        expandBtn.textContent = 'Collapse ↑';
+                        block.classList.add('hidden');
                     }
                 });
+
+                // Hide all revealed question blocks (except first in each section)
+                const firstQuestions = ['q1-block', 'q5-block', 'q9-block', 's1-block'];
+                document.querySelectorAll('#execute-mode .question-block').forEach(qBlock => {
+                    if (firstQuestions.includes(qBlock.id)) {
+                        qBlock.classList.remove('hidden');
+                    } else {
+                        qBlock.classList.add('hidden');
+                    }
+                });
+
+                // Hide all continue buttons in execute mode
+                document.querySelectorAll('#execute-mode .continue-btn').forEach(btn => {
+                    if (btn.id !== 'begin-btn') {
+                        btn.classList.add('hidden');
+                    }
+                });
+
+                // Reset commitment checkbox
+                const commitment = document.getElementById('commitment');
+                if (commitment) {
+                    commitment.checked = false;
+                }
+
+                // Disable begin button
+                const beginBtn = document.getElementById('begin-btn');
+                if (beginBtn) {
+                    beginBtn.disabled = true;
+                }
+
+                // Hide synthesis toggle and close modal
+                synthesisToggleBtn?.classList.remove('visible');
+                closeModal();
+                synthesisAntivision.textContent = '—';
+                synthesisVision.textContent = '—';
+
+                // Switch to execute mode and scroll to top
+                switchMode('execute');
+                window.scrollTo(0, 0);
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
             }
         });
     }
 
-    // ========================================================================
-    // PROTOCOL TABS
-    // ========================================================================
+    // Commitment & Begin
+    function setupCommitment() {
+        const commitment = document.getElementById('commitment');
+        const beginBtn = document.getElementById('begin-btn');
 
-    setupProtocolTabs() {
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tab = btn.dataset.tab;
+        if (!commitment || !beginBtn) return;
 
-                // Remove active from all tabs
-                document.querySelectorAll('.tab-btn').forEach(b => {
-                    b.classList.remove('active');
-                });
+        commitment.addEventListener('change', () => {
+            beginBtn.disabled = !commitment.checked;
+        });
 
-                // Remove active from all content
-                document.querySelectorAll('.protocol-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-
-                // Add active to clicked tab
-                btn.classList.add('active');
-
-                // Show corresponding content
-                const content = document.querySelector(`[data-content="${tab}"]`);
-                if (content) {
-                    content.classList.add('active');
-                }
-            });
+        beginBtn.addEventListener('click', () => {
+            showBlock('block-excavation');
+            scrollToBlock('block-excavation');
         });
     }
 
-    // ========================================================================
-    // TEXTAREAS & AUTO-SAVE
-    // ========================================================================
+    // Progressive Reveal
+    function setupProgressiveReveal() {
+        const flows = {
+            // Excavation
+            'q1': { next: 'q2-block', revealBtn: null },
+            'q2': { next: 'q3-block', revealBtn: null },
+            'q3': { next: 'q4-block', revealBtn: null },
+            'q4': { next: null, revealBtn: 'continue-antivision' },
 
-    setupTextareas() {
-        document.querySelectorAll('.response-area').forEach(textarea => {
-            // Update word count
-            const updateWordCount = () => {
-                const text = textarea.value.trim();
-                const words = text ? text.split(/\s+/).length : 0;
-                const wordCountEl = textarea.nextElementSibling;
-                if (wordCountEl && wordCountEl.classList.contains('word-count')) {
-                    wordCountEl.textContent = `${words} words`;
+            // Anti-vision
+            'q5': { next: 'q6-block', revealBtn: null },
+            'q6': { next: 'q7-block', revealBtn: null },
+            'q7': { next: 'q8-block', revealBtn: null },
+            'q8': { next: 'antivision-synthesis-block', revealBtn: null },
+            'antivision-statement': { next: null, revealBtn: 'continue-vision', updateSynthesis: 'antivision' },
+
+            // Vision
+            'q9': { next: 'q10-block', revealBtn: null },
+            'q10': { next: 'q11-block', revealBtn: null },
+            'q11': { next: 'q12-block', revealBtn: null },
+            'q12': { next: 'q13-block', revealBtn: null },
+            'q13': { next: 'vision-synthesis-block', revealBtn: null },
+            'vision-statement': { next: null, revealBtn: 'continue-interrupts', updateSynthesis: 'vision' },
+
+            // Synthesis
+            's1': { next: 's2-block', revealBtn: null },
+            's2': { next: 's3-block', revealBtn: null },
+            's3': { next: 's4-block', revealBtn: null },
+            's4': { next: 's5-block', revealBtn: null },
+            's5': { next: null, revealBtn: 'continue-final' },
+        };
+
+        // Attach listeners
+        document.querySelectorAll('.response, .response-line').forEach(input => {
+            const key = input.dataset.save;
+            if (!key || !flows[key]) return;
+
+            input.addEventListener('input', () => {
+                const value = input.value.trim();
+                if (value.length > 10) {
+                    const flow = flows[key];
+                    
+                    if (flow.next) {
+                        const nextEl = document.getElementById(flow.next);
+                        if (nextEl && nextEl.classList.contains('hidden')) {
+                            nextEl.classList.remove('hidden');
+                            setTimeout(() => {
+                                nextEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 100);
+                        }
+                    }
+
+                    if (flow.revealBtn) {
+                        const btn = document.getElementById(flow.revealBtn);
+                        if (btn) btn.classList.remove('hidden');
+                    }
+
+                    if (flow.updateSynthesis) {
+                        updateSynthesisBar(flow.updateSynthesis, value);
+                    }
                 }
-            };
-
-            // Auto-save to localStorage
-            const saveData = () => {
-                const key = textarea.dataset.save;
-                if (key) {
-                    localStorage.setItem(`protocol_${key}`, textarea.value);
-                }
-            };
-
-            textarea.addEventListener('input', () => {
-                updateWordCount();
-                saveData();
             });
+        });
 
-            // Initial word count
-            updateWordCount();
+        // Section navigation
+        document.getElementById('continue-antivision')?.addEventListener('click', () => {
+            showBlock('block-antivision');
+            scrollToBlock('block-antivision');
+        });
+
+        document.getElementById('continue-vision')?.addEventListener('click', () => {
+            showBlock('block-vision');
+            scrollToBlock('block-vision');
+        });
+
+        document.getElementById('continue-interrupts')?.addEventListener('click', () => {
+            showBlock('block-interrupts');
+            scrollToBlock('block-interrupts');
+        });
+
+        document.getElementById('continue-synthesis')?.addEventListener('click', () => {
+            showBlock('block-synthesis');
+            scrollToBlock('block-synthesis');
+        });
+
+        document.getElementById('continue-final')?.addEventListener('click', () => {
+            showBlock('block-final');
+            populateFinalOutput();
+            scrollToBlock('block-final');
         });
     }
 
-    loadSavedData() {
-        document.querySelectorAll('.response-area').forEach(textarea => {
-            const key = textarea.dataset.save;
-            if (key) {
-                const saved = localStorage.getItem(`protocol_${key}`);
-                if (saved) {
-                    textarea.value = saved;
-                    // Trigger input event to update word count
-                    textarea.dispatchEvent(new Event('input'));
-                }
-            }
-        });
-    }
-
-    // ========================================================================
-    // REMINDERS & NOTIFICATIONS
-    // ========================================================================
-
-    setupReminders() {
-        const activateBtn = document.getElementById('activate-reminders-btn');
-        const statusEl = document.getElementById('reminder-status');
-
-        if (activateBtn) {
-            activateBtn.addEventListener('click', () => {
-                this.activateReminders(statusEl);
-            });
+    function showBlock(blockId) {
+        const block = document.getElementById(blockId);
+        if (block) {
+            block.classList.remove('hidden');
         }
     }
 
-    async activateReminders(statusEl) {
-        // Request notification permission
-        if ('Notification' in window) {
-            const permission = await Notification.requestPermission();
+    function scrollToBlock(blockId) {
+        const block = document.getElementById(blockId);
+        if (block) {
+            setTimeout(() => {
+                block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+    }
 
-            if (permission !== 'granted') {
-                statusEl.textContent = '⚠ Notification permission denied. Please enable notifications for this site.';
-                statusEl.style.borderColor = '#000';
-                return;
-            }
+    // Synthesis Bar
+    function updateSynthesisBar(type, value) {
+        if (type === 'antivision') {
+            synthesisAntivision.textContent = truncate(value, 80);
+        } else if (type === 'vision') {
+            synthesisVision.textContent = truncate(value, 80);
+        }
+
+        const hasAntivision = synthesisAntivision.textContent !== '—';
+        const hasVision = synthesisVision.textContent !== '—';
+        
+        if ((hasAntivision || hasVision) && currentMode === 'execute') {
+            synthesisToggleBtn?.classList.add('visible');
         } else {
-            statusEl.textContent = '⚠ Notifications not supported in this browser.';
-            return;
+            synthesisToggleBtn?.classList.remove('visible');
         }
+    }
 
-        // Clear existing reminders
-        this.clearReminders();
+    function truncate(str, max) {
+        if (str.length <= max) return str;
+        return str.substring(0, max).trim() + '...';
+    }
 
-        // Get reminder times
+    // Auto-save
+    function setupAutoSave() {
+        document.querySelectorAll('.response, .response-line').forEach(input => {
+            const key = input.dataset.save;
+            if (!key) return;
+
+            let timeout;
+            input.addEventListener('input', () => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    localStorage.setItem(`protocol-${key}`, input.value);
+                }, 500);
+            });
+        });
+    }
+
+    function loadSavedResponses() {
+        document.querySelectorAll('.response, .response-line').forEach(input => {
+            const key = input.dataset.save;
+            if (!key) return;
+
+            const saved = localStorage.getItem(`protocol-${key}`);
+            if (saved) {
+                input.value = saved;
+                input.dispatchEvent(new Event('input'));
+            }
+        });
+
+        // Restore synthesis bar
+        const savedAntivision = localStorage.getItem('protocol-antivision-statement');
+        const savedVision = localStorage.getItem('protocol-vision-statement');
+        
+        if (savedAntivision) {
+            updateSynthesisBar('antivision', savedAntivision);
+        }
+        if (savedVision) {
+            updateSynthesisBar('vision', savedVision);
+        }
+    }
+
+    // Interrupts / Reminders
+    function setupInterrupts() {
+        const activateBtn = document.getElementById('activate-interrupts');
+        const statusEl = document.getElementById('interrupt-status');
+        const continueBtn = document.getElementById('continue-synthesis');
+
+        if (!activateBtn) return;
+
+        activateBtn.addEventListener('click', async () => {
+            if ('Notification' in window) {
+                const permission = await Notification.requestPermission();
+                
+                if (permission === 'granted') {
+                    scheduleReminders();
+                    statusEl.textContent = 'Reminders activated. You will receive notifications.';
+                    activateBtn.textContent = 'Reminders Active';
+                    activateBtn.disabled = true;
+                    continueBtn.classList.remove('hidden');
+                } else {
+                    statusEl.textContent = 'Notification permission denied. Use manual reminders.';
+                    continueBtn.classList.remove('hidden');
+                }
+            } else {
+                statusEl.textContent = 'Notifications not supported. Use manual reminders.';
+                continueBtn.classList.remove('hidden');
+            }
+        });
+    }
+
+    function scheduleReminders() {
         const timeInputs = document.querySelectorAll('.time-input');
-        const reminderQuestions = [
-            'What am I avoiding right now by doing what I\'m doing?',
-            'If someone filmed the last two hours, what would they conclude I want from my life?',
+        const questions = [
+            'What am I avoiding right now?',
+            'If someone filmed the last two hours, what would they conclude I want?',
             'Am I moving toward the life I hate or the life I want?',
             'What\'s the most important thing I\'m pretending isn\'t important?',
             'What did I do today out of identity protection rather than genuine desire?',
             'When did I feel most alive today? When did I feel most dead?'
         ];
 
-        let scheduledCount = 0;
-
         timeInputs.forEach((input, index) => {
-            const time = input.value;
-            if (time) {
-                const [hours, minutes] = time.split(':').map(Number);
-                const now = new Date();
-                const reminderTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0);
+            const [hours, minutes] = input.value.split(':').map(Number);
+            const now = new Date();
+            const reminderTime = new Date();
+            reminderTime.setHours(hours, minutes, 0, 0);
 
-                // If time has passed today, schedule for tomorrow
-                if (reminderTime < now) {
-                    reminderTime.setDate(reminderTime.getDate() + 1);
-                }
+            if (reminderTime <= now) return;
 
-                const timeUntilReminder = reminderTime - now;
+            const delay = reminderTime - now;
 
-                // Schedule reminder
-                const timeoutId = setTimeout(() => {
-                    this.showNotification(reminderQuestions[index]);
-                }, timeUntilReminder);
-
-                this.reminders.push(timeoutId);
-                scheduledCount++;
-
-                // Also check every minute if we've reached the time
-                const intervalId = setInterval(() => {
-                    const currentTime = new Date();
-                    if (currentTime.getHours() === hours && currentTime.getMinutes() === minutes) {
-                        this.showNotification(reminderQuestions[index]);
-                    }
-                }, 60000); // Check every minute
-
-                this.reminderIntervals.push(intervalId);
-            }
+            setTimeout(() => {
+                new Notification('The Protocol', {
+                    body: questions[index],
+                    requireInteraction: true
+                });
+            }, delay);
         });
-
-        if (scheduledCount > 0) {
-            statusEl.textContent = `✓ ${scheduledCount} reminders activated! You'll receive notifications at the scheduled times.`;
-            statusEl.style.borderColor = '#000';
-            statusEl.style.background = '#000';
-            statusEl.style.color = '#fff';
-        } else {
-            statusEl.textContent = '⚠ No valid times entered. Please set times for your reminders.';
-        }
     }
 
-    showNotification(question) {
-        if ('Notification' in window && Notification.permission === 'granted') {
-            const notification = new Notification('THE PROTOCOL - Time to Reflect', {
-                body: question,
-                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="black"/><text x="50" y="55" font-family="monospace" font-size="40" fill="white" text-anchor="middle">!</text></svg>',
-                requireInteraction: true
-            });
-
-            notification.onclick = () => {
-                window.focus();
-                this.navigateTo('protocol');
-                notification.close();
-            };
-        }
-    }
-
-    clearReminders() {
-        this.reminders.forEach(id => clearTimeout(id));
-        this.reminderIntervals.forEach(id => clearInterval(id));
-        this.reminders = [];
-        this.reminderIntervals = [];
-    }
-
-    // ========================================================================
-    // EXPORT FUNCTIONALITY
-    // ========================================================================
-
-    setupExport() {
-        const exportTextBtn = document.getElementById('export-text-btn');
-        const exportPdfBtn = document.getElementById('export-pdf-btn');
-
-        if (exportTextBtn) {
-            exportTextBtn.addEventListener('click', () => {
-                this.exportAsText();
-            });
-        }
-
-        if (exportPdfBtn) {
-            exportPdfBtn.addEventListener('click', () => {
-                this.exportAsPDF();
-            });
-        }
-    }
-
-    getAllResponses() {
-        const responses = {
-            morning: {},
-            day: {},
-            evening: {},
-            gameplan: {}
+    // Final Output
+    function populateFinalOutput() {
+        const mappings = {
+            'final-antivision': 'protocol-antivision-statement',
+            'final-vision': 'protocol-vision-statement',
+            'final-enemy': 'protocol-s2',
+            'final-year': 'protocol-s3',
+            'final-month': 'protocol-s4',
+            'final-tomorrow': 'protocol-s5'
         };
 
-        // Collect all responses
-        document.querySelectorAll('.response-area').forEach(textarea => {
-            const key = textarea.dataset.save;
-            if (key && textarea.value.trim()) {
-                if (key.startsWith('morning-')) {
-                    responses.morning[key] = textarea.value;
-                } else if (key.startsWith('day-')) {
-                    responses.day[key] = textarea.value;
-                } else if (key.startsWith('evening-')) {
-                    responses.evening[key] = textarea.value;
-                } else if (key.startsWith('gameplan-')) {
-                    responses.gameplan[key] = textarea.value;
-                }
+        Object.entries(mappings).forEach(([elementId, storageKey]) => {
+            const el = document.getElementById(elementId);
+            const value = localStorage.getItem(storageKey);
+            if (el && value) {
+                el.textContent = value;
+            }
+        });
+    }
+
+    // Export
+    function setupExport() {
+        const exportBtn = document.getElementById('export-btn');
+        if (!exportBtn) return;
+
+        exportBtn.addEventListener('click', () => {
+            const data = gatherAllResponses();
+            const text = formatExport(data);
+            downloadText(text, 'the-protocol.txt');
+        });
+    }
+
+    function gatherAllResponses() {
+        const data = {};
+        document.querySelectorAll('.response, .response-line').forEach(input => {
+            const key = input.dataset.save;
+            if (key) {
+                data[key] = input.value;
+            }
+        });
+        return data;
+    }
+
+    function formatExport(data) {
+        const date = new Date().toLocaleDateString();
+        let text = `THE PROTOCOL\n`;
+        text += `Completed: ${date}\n`;
+        text += `${'='.repeat(50)}\n\n`;
+
+        text += `ANTI-VISION\n${data['antivision-statement'] || '—'}\n\n`;
+        text += `VISION\n${data['vision-statement'] || '—'}\n\n`;
+
+        text += `${'='.repeat(50)}\n\n`;
+
+        const labels = {
+            'q1': 'Dull dissatisfaction',
+            'q2': 'Repeated complaints',
+            'q3': 'What behavior reveals',
+            'q4': 'Unbearable truth',
+            'q5': 'Five years unchanged',
+            'q6': 'Ten years missed',
+            'q7': 'End of life cost',
+            'q8': 'Who lives this future',
+            'q9': 'Identity to give up',
+            'q10': 'Embarrassing reason',
+            'q11': 'Self-protection',
+            'q12': 'Three year vision',
+            'q13': 'Identity statement',
+            'day-insights': 'Day insights',
+            's1': 'Why stuck',
+            's2': 'The enemy',
+            's3': 'One year lens',
+            's4': 'One month lens',
+            's5': 'Tomorrow actions'
+        };
+
+        Object.entries(labels).forEach(([key, label]) => {
+            if (data[key]) {
+                text += `${label.toUpperCase()}\n${data[key]}\n\n`;
             }
         });
 
-        return responses;
+        return text;
     }
 
-    exportAsText() {
-        const responses = this.getAllResponses();
-        const date = new Date().toLocaleDateString();
-
-        let text = '================================================================================\n';
-        text += '                          THE PROTOCOL - YOUR JOURNEY\n';
-        text += `                              ${date}\n`;
-        text += '================================================================================\n\n';
-
-        // Morning Session
-        if (Object.keys(responses.morning).length > 0) {
-            text += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
-            text += 'PART 1: MORNING SESSION - PSYCHOLOGICAL EXCAVATION\n';
-            text += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
-
-            const morningQuestions = [
-                'What is the dull and persistent dissatisfaction you\'ve learned to live with?',
-                'What do you complain about repeatedly but never actually change?',
-                'For each complaint: What would someone watching your behavior conclude you want?',
-                'What truth about your current life would be unbearable to admit?',
-                'If nothing changes for five years, describe an average Tuesday.',
-                'Now ten years. What have you missed? What opportunities closed?',
-                'You\'re at the end of your life. You lived the safe version. What was the cost?',
-                'Who in your life is already living this future?',
-                'What identity would you have to give up to actually change?',
-                'What is the most embarrassing reason you haven\'t changed?',
-                'If your current behavior is self-protection, what are you protecting?',
-                'Forget practicality. What do you actually want in three years?',
-                'What would you have to believe about yourself for that life to feel natural?',
-                'What is one thing you would do this week if you were already that person?'
-            ];
-
-            Object.keys(responses.morning).sort().forEach((key, index) => {
-                text += `Q${index + 1}: ${morningQuestions[index]}\n\n`;
-                text += `${responses.morning[key]}\n\n`;
-                text += '────────────────────────────────────────────────────────────────────────────\n\n';
-            });
-        }
-
-        // Day Insights
-        if (Object.keys(responses.day).length > 0) {
-            text += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
-            text += 'PART 2: THROUGHOUT THE DAY - INSIGHTS\n';
-            text += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
-
-            Object.keys(responses.day).forEach(key => {
-                text += `${responses.day[key]}\n\n`;
-            });
-        }
-
-        // Evening Session
-        if (Object.keys(responses.evening).length > 0) {
-            text += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
-            text += 'PART 3: EVENING SESSION - SYNTHESIS\n';
-            text += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
-
-            const eveningQuestions = [
-                'After today, what feels most true about why you\'ve been stuck?',
-                'What is the actual enemy?',
-                'Your anti-vision in one sentence:',
-                'Your vision in one sentence:',
-                'One-year lens:',
-                'One-month lens:',
-                'Daily lens:'
-            ];
-
-            Object.keys(responses.evening).sort().forEach((key, index) => {
-                text += `${eveningQuestions[index]}\n\n`;
-                text += `${responses.evening[key]}\n\n`;
-                text += '────────────────────────────────────────────────────────────────────────────\n\n';
-            });
-        }
-
-        // Game Plan
-        if (Object.keys(responses.gameplan).length > 0) {
-            text += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
-            text += 'YOUR GAME PLAN\n';
-            text += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
-
-            const gameplanLabels = {
-                'gameplan-antivision': 'ANTI-VISION (What\'s at stake)',
-                'gameplan-vision': 'VISION (How you win)',
-                'gameplan-year': '1 YEAR GOAL (The mission)',
-                'gameplan-month': '1 MONTH PROJECT (Boss fight)',
-                'gameplan-daily': 'DAILY LEVERS (Quests)',
-                'gameplan-constraints': 'CONSTRAINTS (Rules)'
-            };
-
-            Object.keys(gameplanLabels).forEach(key => {
-                if (responses.gameplan[key]) {
-                    text += `${gameplanLabels[key]}\n\n`;
-                    text += `${responses.gameplan[key]}\n\n`;
-                    text += '────────────────────────────────────────────────────────────────────────────\n\n';
-                }
-            });
-        }
-
-        text += '================================================================================\n';
-        text += '"Trust only movement. Life happens at the level of events, not of words."\n';
-        text += '                                                            - Alfred Adler\n';
-        text += '================================================================================\n';
-
-        // Download
+    function downloadText(text, filename) {
         const blob = new Blob([text], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `the-protocol-${date.replace(/\//g, '-')}.txt`;
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
 
-    exportAsPDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        const responses = this.getAllResponses();
-        const date = new Date().toLocaleDateString();
-
-        const margin = 20;
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
-        const maxWidth = pageWidth - (margin * 2);
-        let y = margin;
-
-        // Helper function to add text with wrapping
-        const addText = (text, size = 10, isBold = false) => {
-            doc.setFontSize(size);
-            if (isBold) {
-                doc.setFont('courier', 'bold');
-            } else {
-                doc.setFont('courier', 'normal');
-            }
-
-            const lines = doc.splitTextToSize(text, maxWidth);
-            lines.forEach(line => {
-                if (y + 10 > pageHeight - margin) {
-                    doc.addPage();
-                    y = margin;
-                }
-                doc.text(line, margin, y);
-                y += 6;
-            });
-            y += 4;
-        };
-
-        // Title
-        addText('THE PROTOCOL - YOUR JOURNEY', 16, true);
-        addText(date, 10);
-        y += 10;
-
-        // Morning Session
-        if (Object.keys(responses.morning).length > 0) {
-            addText('PART 1: MORNING SESSION', 14, true);
-            y += 5;
-
-            const morningQuestions = [
-                'Q1: What is the dull and persistent dissatisfaction?',
-                'Q2: What do you complain about but never change?',
-                'Q3: What would someone watching your behavior conclude?',
-                'Q4: What truth would be unbearable to admit?',
-                'Q5: Five years, same life - describe Tuesday.',
-                'Q6: Ten years - what did you miss?',
-                'Q7: End of life, safe version - what was the cost?',
-                'Q8: Who is living this future now?',
-                'Q9: What identity must you give up?',
-                'Q10: Most embarrassing reason you haven\'t changed?',
-                'Q11: What are you protecting?',
-                'Q12: What do you actually want in three years?',
-                'Q13: What would you need to believe?',
-                'Q14: One thing you\'d do this week if you were that person?'
-            ];
-
-            Object.keys(responses.morning).sort().forEach((key, index) => {
-                addText(morningQuestions[index], 10, true);
-                addText(responses.morning[key], 10);
-                y += 5;
-            });
-        }
-
-        // Day Insights
-        if (Object.keys(responses.day).length > 0) {
-            if (y > pageHeight - 50) {
-                doc.addPage();
-                y = margin;
-            }
-            addText('PART 2: DAY INSIGHTS', 14, true);
-            y += 5;
-            Object.keys(responses.day).forEach(key => {
-                addText(responses.day[key], 10);
-            });
-        }
-
-        // Evening Session
-        if (Object.keys(responses.evening).length > 0) {
-            if (y > pageHeight - 50) {
-                doc.addPage();
-                y = margin;
-            }
-            addText('PART 3: EVENING SESSION', 14, true);
-            y += 5;
-
-            const eveningQuestions = [
-                'Why you\'ve been stuck:',
-                'The actual enemy:',
-                'Anti-vision (one sentence):',
-                'Vision (one sentence):',
-                'One-year lens:',
-                'One-month lens:',
-                'Daily lens:'
-            ];
-
-            Object.keys(responses.evening).sort().forEach((key, index) => {
-                addText(eveningQuestions[index], 10, true);
-                addText(responses.evening[key], 10);
-                y += 5;
-            });
-        }
-
-        // Game Plan
-        if (Object.keys(responses.gameplan).length > 0) {
-            if (y > pageHeight - 50) {
-                doc.addPage();
-                y = margin;
-            }
-            addText('YOUR GAME PLAN', 14, true);
-            y += 5;
-
-            const gameplanLabels = {
-                'gameplan-antivision': 'ANTI-VISION',
-                'gameplan-vision': 'VISION',
-                'gameplan-year': '1 YEAR GOAL',
-                'gameplan-month': '1 MONTH PROJECT',
-                'gameplan-daily': 'DAILY LEVERS',
-                'gameplan-constraints': 'CONSTRAINTS'
-            };
-
-            Object.keys(gameplanLabels).forEach(key => {
-                if (responses.gameplan[key]) {
-                    addText(gameplanLabels[key], 10, true);
-                    addText(responses.gameplan[key], 10);
-                    y += 5;
-                }
-            });
-        }
-
-        // Save
-        doc.save(`the-protocol-${date.replace(/\//g, '-')}.pdf`);
-    }
-}
-
-// ============================================================================
-// INITIALIZE APP
-// ============================================================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    new ProtocolApp();
-});
+    // Start
+    document.addEventListener('DOMContentLoaded', init);
+})();

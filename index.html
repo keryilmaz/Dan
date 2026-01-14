@@ -3,558 +3,673 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Protocol - Interactive Journey</title>
+    <title>The Protocol by Dan Koe</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Header with mode toggle -->
     <header>
-        <nav>
-            <div class="logo">THE PROTOCOL</div>
-            <ul class="nav-links">
-                <li><a href="#intro" data-section="intro">Start</a></li>
-                <li><a href="#concepts" data-section="concepts">Concepts</a></li>
-                <li><a href="#protocol" data-section="protocol">Protocol</a></li>
-                <li><a href="#gameplan" data-section="gameplan">Game Plan</a></li>
-            </ul>
-        </nav>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
+        <div class="header-inner">
+            <a href="https://x.com/thedankoe" target="_blank" rel="noopener" class="logo">The Protocol <span class="author">by Dan Koe</span></a>
+            <div class="mode-toggle">
+                <button class="mode-btn active" data-mode="learn">Learn</button>
+                <button class="mode-btn" data-mode="execute">Execute</button>
+                <button class="theme-btn" id="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon theme-icon-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                        <path d="M20.9638 12.7674C19.8361 13.5447 18.4693 13.9998 16.9961 13.9998C13.1301 13.9998 9.99609 10.8657 9.99609 6.99975C9.99609 5.52667 10.4511 4.15987 11.2283 3.03223C6.61911 3.42277 3 7.28768 3 11.9979C3 16.9674 7.0286 20.996 11.9981 20.996C16.7084 20.996 20.5734 17.3767 20.9638 12.7674Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon-light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" style="display: none;">
+                        <path d="M12 3V2M12 22V21M18.3598 5.64005L19.0698 4.93005M4.93016 19.07L5.64016 18.36M21 12H22M2 12H3M18.3598 18.36L19.0698 19.07M4.93016 4.93005L5.64016 5.64005M15.5355 8.46447C17.4882 10.4171 17.4882 13.5829 15.5355 15.5355C13.5829 17.4882 10.4171 17.4882 8.46447 15.5355C6.51185 13.5829 6.51185 10.4171 8.46447 8.46447C10.4171 6.51185 13.5829 6.51185 15.5355 8.46447Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
 
-    <main id="app">
-        <!-- Intro Section -->
-        <section id="intro" class="section active">
-            <div class="container">
-                <div class="content-box">
-                    <h1>You aren't where you want to be.</h1>
-                    <p class="lead">Not because you lack discipline. Not because you're lazy. But because you aren't the person who would be there.</p>
-
-                    <div class="warning-box">
-                        <h3>⚠ This is not casual reading</h3>
-                        <p>This protocol requires one full day to complete properly:</p>
-                        <ul>
-                            <li>Morning: 30-45 minutes of deep introspection</li>
-                            <li>Throughout day: 6 timed reflection interrupts</li>
-                            <li>Evening: 30-45 minutes of synthesis</li>
-                        </ul>
-                        <p>Your responses will be saved locally. You can return anytime.</p>
-                    </div>
-
-                    <div class="commitment-check">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="commitment" />
-                            <span>I understand this requires genuine effort. I'm ready to do the uncomfortable work.</span>
-                        </label>
-                    </div>
-
-                    <button class="cta-button" id="begin-btn" disabled>Begin The Journey</button>
+    <!-- ========== LEARN MODE ========== -->
+    <main id="learn-mode" class="mode-content active">
+        
+        <!-- Hero -->
+        <section class="learn-section hero-section">
+            <div class="learn-container">
+                <h1>You aren't where you want to be.</h1>
+                <p class="hero-sub">Not because you lack discipline. Not because you're lazy. But because you aren't the person who would be there.</p>
+                <p class="hero-meta">7 ideas on behavior change, psychology, and productivity. One protocol to uncover what you truly want.</p>
+                <div class="hero-buttons">
+                    <button class="scroll-btn" id="scroll-to-learn">Scroll Down to Read Details</button>
+                    <button class="start-execute-btn" id="start-execute">Begin the Protocol</button>
                 </div>
             </div>
         </section>
 
-        <!-- Concepts Section -->
-        <section id="concepts" class="section">
-            <div class="container">
-                <h2>Seven Foundations</h2>
-                <p class="subtitle">Understanding how change actually works</p>
-
-                <div class="concepts-grid">
-                    <div class="concept-card" data-concept="1">
-                        <h3>I – You Aren't The Person Yet</h3>
-                        <div class="concept-preview">You focus on changing actions. You should focus on changing identity.</div>
-                        <button class="expand-btn">Explore ↓</button>
-                        <div class="concept-content">
-                            <p>When it comes to setting big goals, people focus on changing their actions to make progress. But that's second order.</p>
-                            <p>First order: <strong>Changing who you are so that your behavior naturally follows.</strong></p>
-                            <p>The bodybuilder doesn't "grind" to eat healthy. They can't see themselves living any other way. The CEO doesn't discipline themselves to show up. They would hate lying in bed past their alarm.</p>
-                            <p class="highlight">If you want a specific outcome in life, you must have the lifestyle that creates that outcome long before you reach it.</p>
-                            <p>When you truly change yourself, all of your old habits become disgusting, because you have a deep awareness of what kind of life those actions compound into.</p>
-                        </div>
-                    </div>
-
-                    <div class="concept-card" data-concept="2">
-                        <h3>II – You Don't Actually Want It</h3>
-                        <div class="concept-preview">Your actions reveal your true goals, not your words.</div>
-                        <button class="expand-btn">Explore ↓</button>
-                        <div class="concept-content">
-                            <p><em>"Trust only movement. Life happens at the level of events, not of words."</em> - Alfred Adler</p>
-                            <p>All behavior is goal-oriented. It's teleological. But most of your goals are unconscious.</p>
-                            <p>If you can't stop procrastinating, you're not lacking discipline. You're achieving the goal of <strong>protecting yourself from judgment</strong> that comes from finishing and sharing your work.</p>
-                            <p>If you stay in a dead-end job, you're not lacking courage. You're pursuing the goal of safety, predictability, and avoiding the appearance of failure.</p>
-                            <p class="highlight">Real change requires changing your goals. Not setting new ones, but changing your point of view.</p>
-                            <p>A goal is a projection into the future that acts as a lens of perception, allowing you to notice information, ideas, and resources that aid in achieving it.</p>
-                        </div>
-                    </div>
-
-                    <div class="concept-card" data-concept="3">
-                        <h3>III – You're Afraid To Be There</h3>
-                        <div class="concept-preview">Your identity is defended like physical survival.</div>
-                        <button class="expand-btn">Explore ↓</button>
-                        <div class="concept-content">
-                            <p><strong>The Anatomy of Identity:</strong></p>
-                            <ol>
-                                <li>You want to achieve a goal</li>
-                                <li>You perceive reality through the lens of that goal</li>
-                                <li>You notice "important" information (learning)</li>
-                                <li>You act toward that goal and receive feedback</li>
-                                <li>You repeat until it becomes automatic (conditioning)</li>
-                                <li>That behavior becomes identity ("I am the type of person who...")</li>
-                                <li>You defend your identity to maintain psychological consistency</li>
-                                <li>Your identity shapes new goals, restarting the cycle</li>
-                            </ol>
-                            <p>This process started when you were a child. You were conditioned through reward and punishment to adopt beliefs and values that kept you safe.</p>
-                            <p class="highlight">When your identity feels threatened, you go into fight or flight. The same stress response as physical danger.</p>
-                            <p>If you're heavily identified with a political ideology, religion, profession, or lifestyle, challenges to those beliefs feel like attacks on your survival.</p>
-                        </div>
-                    </div>
-
-                    <div class="concept-card" data-concept="4">
-                        <h3>IV – Your Life Exists At A Level of Mind</h3>
-                        <div class="concept-preview">The mind evolves through 9 predictable stages.</div>
-                        <button class="expand-btn">Explore ↓</button>
-                        <div class="concept-content">
-                            <p><strong>9 Stages of Ego Development:</strong></p>
-                            <ol>
-                                <li><strong>Impulsive</strong> - No separation between impulse and action</li>
-                                <li><strong>Self-Protective</strong> - The world is dangerous, look out for yourself</li>
-                                <li><strong>Conformist</strong> - You are your group and its rules</li>
-                                <li><strong>Self-Aware</strong> - You notice an inner life that doesn't match the exterior</li>
-                                <li><strong>Conscientious</strong> - You build your own system of principles</li>
-                                <li><strong>Individualist</strong> - You see your principles were shaped by context</li>
-                                <li><strong>Strategist</strong> - You work with systems while aware of your involvement</li>
-                                <li><strong>Construct-Aware</strong> - You see all frameworks as useful fictions</li>
-                                <li><strong>Unitive</strong> - Separation between self and life dissolves</li>
-                            </ol>
-                            <p>Most readers hover between stages 4-8. Moving through them follows a pattern you can navigate consciously.</p>
-                        </div>
-                    </div>
-
-                    <div class="concept-card" data-concept="5">
-                        <h3>V – Intelligence Is Getting What You Want</h3>
-                        <div class="concept-preview">Success requires agency, opportunity, and intelligence.</div>
-                        <button class="expand-btn">Explore ↓</button>
-                        <div class="concept-content">
-                            <p><strong>The Formula for Success:</strong></p>
-                            <ul>
-                                <li><strong>Agency</strong> - Your likelihood to act toward goals</li>
-                                <li><strong>Opportunity</strong> - Goals that bear fruit</li>
-                                <li><strong>Intelligence</strong> - Your ability to iterate and learn</li>
-                            </ul>
-                            <p>Cybernetics (from Greek "to steer") illustrates the properties of intelligent systems:</p>
-                            <ol>
-                                <li>Have a goal</li>
-                                <li>Act toward that goal</li>
-                                <li>Sense where you are</li>
-                                <li>Compare it to the goal</li>
-                                <li>Act again based on feedback</li>
-                            </ol>
-                            <p class="highlight">High intelligence is the ability to iterate, persist, and understand the big picture. Low intelligence is the inability to learn from mistakes.</p>
-                            <p>The reality is that you can achieve any goal you set your mind to. There is a series of choices that lead to any outcome. You may not have the resources yet, but intelligence means knowing they can be acquired.</p>
-                        </div>
-                    </div>
-
-                    <div class="concept-card" data-concept="6">
-                        <h3>VI – The Three Phases of Transformation</h3>
-                        <div class="concept-preview">Identity flips happen fast after tension builds.</div>
-                        <button class="expand-btn">Explore ↓</button>
-                        <div class="concept-content">
-                            <p>When people successfully flip their identity, it follows this pattern:</p>
-                            <ol>
-                                <li><strong>Dissonance</strong> - They feel like they don't belong in their current life and become sufficiently fed up</li>
-                                <li><strong>Uncertainty</strong> - They don't know what comes next, so they experiment or get lost</li>
-                                <li><strong>Discovery</strong> - They discover what they want and make 6 years of progress in 6 months</li>
-                            </ol>
-                            <p class="highlight">Our goal: reach dissonance, navigate uncertainty, and discover what you truly want with overwhelming clarity.</p>
-                        </div>
-                    </div>
-
-                    <div class="concept-card" data-concept="7">
-                        <h3>VII – Turn Your Life Into A Video Game</h3>
-                        <div class="concept-preview">Games create obsession through structure.</div>
-                        <button class="expand-btn">Explore ↓</button>
-                        <div class="concept-content">
-                            <p>Games are the poster child for obsession, enjoyment, and flow states. They have all the components that lead to focus and clarity.</p>
-                            <p><strong>The 6 Components:</strong></p>
-                            <ul>
-                                <li><strong>Anti-vision</strong> (What's at stake) - The life you never want to experience</li>
-                                <li><strong>Vision</strong> (How you win) - The ideal life you're building toward</li>
-                                <li><strong>1 Year Goal</strong> (The mission) - Your sole priority</li>
-                                <li><strong>1 Month Project</strong> (Boss fight) - How you gain XP and loot</li>
-                                <li><strong>Daily Levers</strong> (Quests) - The daily process that unlocks opportunities</li>
-                                <li><strong>Constraints</strong> (Rules) - Limitations that encourage creativity</li>
-                            </ul>
-                            <p class="highlight">These act as concentric circles - a forcefield - that guard your mind from distractions and shiny objects.</p>
-                        </div>
-                    </div>
+        <!-- Concept I -->
+        <section class="learn-section">
+            <div class="learn-container">
+                <span class="concept-num">I</span>
+                <h2>You aren't the person who would be there</h2>
+                
+                <p>When it comes to setting big goals, people focus on changing their <em>actions</em> to make progress. But that's second order.</p>
+                
+                <p>First order: <strong>Changing who you are so that your behavior naturally follows.</strong></p>
+                
+                <p>Think of somebody successful. A bodybuilder with a great physique. A founder worth hundreds of millions. Do you think the bodybuilder has to "grind" to eat healthy? Does the CEO discipline themselves to show up?</p>
+                
+                <p>The truth is they can't see themselves living any other way. The bodybuilder has to grind to eat <em>unhealthily</em>. The CEO has to force themselves to lie in bed past their alarm, and they hate every second of it.</p>
+                
+                <div class="callout">
+                    <p>If you want a specific outcome in life, you must have the <em>lifestyle</em> that creates that outcome long before you reach it.</p>
                 </div>
-
-                <button class="cta-button nav-btn" data-next="protocol">Continue to Protocol →</button>
+                
+                <p>When you truly change yourself, all of your habits that don't move the needle become disgusting, because you have a deep awareness of what kind of life those actions compound into.</p>
+                
+                <p>You are okay with your current standards because you are not fully aware of what they are or what they lead to.</p>
             </div>
         </section>
 
-        <!-- Protocol Section -->
-        <section id="protocol" class="section">
-            <div class="container">
+        <!-- Concept II -->
+        <section class="learn-section">
+            <div class="learn-container">
+                <span class="concept-num">II</span>
+                <h2>You don't actually want to be there</h2>
+                
+                <blockquote>
+                    "Trust only movement. Life happens at the level of events, not of words."
+                    <cite>— Alfred Adler</cite>
+                </blockquote>
+                
+                <p>All behavior is goal-oriented. It's teleological. When you think about it, this is obvious—but most of the time, your goals are unconscious.</p>
+                
+                <p>If you can't stop procrastinating, you may justify it with "I lack discipline." But in reality, you are achieving a goal: <strong>protecting yourself from the judgment that comes from finishing and sharing your work.</strong></p>
+                
+                <p>If you stay in a dead-end job, you may think you lack courage. But you're pursuing the goal of safety, predictability, and an excuse to not look like a failure.</p>
+                
+                <div class="callout">
+                    <p>Real change requires changing your goals. Not <em>setting</em> new ones—changing your <em>point of view</em>.</p>
+                </div>
+                
+                <p>A goal is a projection into the future that acts as a lens of perception, allowing you to notice information, ideas, and resources that aid in achieving it.</p>
+            </div>
+        </section>
+
+        <!-- Concept III -->
+        <section class="learn-section">
+            <div class="learn-container">
+                <span class="concept-num">III</span>
+                <h2>You're afraid to be there</h2>
+                
+                <p>Here's how you've become who you are today—the anatomy of identity:</p>
+                
+                <ol class="numbered-list">
+                    <li>You want to achieve a goal</li>
+                    <li>You perceive reality through the lens of that goal</li>
+                    <li>You notice "important" information that helps you achieve it (learning)</li>
+                    <li>You act toward that goal and receive feedback</li>
+                    <li>You repeat until it becomes automatic (conditioning)</li>
+                    <li>That behavior becomes identity ("I am the type of person who...")</li>
+                    <li>You defend your identity to maintain psychological consistency</li>
+                    <li>Your identity shapes new goals, restarting the cycle</li>
+                </ol>
+                
+                <p>This process started when you were a child. You conformed to survive. Through reward and punishment, you adopted beliefs and values to stay safe.</p>
+                
+                <div class="callout">
+                    <p>When your body feels threatened, you go into fight or flight. When your identity feels threatened, <em>the same thing happens.</em></p>
+                </div>
+                
+                <p>If you are heavily identified with an ideology, you will feel threatened when someone challenges your beliefs. You literally feel the stress—like you were slapped in the face.</p>
+                
+                <p>The same happens when you unconsciously see yourself as someone who would not take the actions to achieve a better life.</p>
+            </div>
+        </section>
+
+        <!-- Concept IV -->
+        <section class="learn-section">
+            <div class="learn-container">
+                <span class="concept-num">IV</span>
+                <h2>Your life exists at a specific level of mind</h2>
+                
+                <p>The mind evolves through predictable stages. When you're born, you absorb whatever beliefs you can so you feel safe. If you're not careful, your mind crystallizes.</p>
+                
+                <div class="stages-list">
+                    <div class="stage">
+                        <span class="stage-num">1</span>
+                        <div class="stage-content">
+                            <strong>Impulsive</strong>
+                            <p>No separation between impulse and action. Black and white thinking.</p>
+                        </div>
+                    </div>
+                    <div class="stage">
+                        <span class="stage-num">2</span>
+                        <div class="stage-content">
+                            <strong>Self-Protective</strong>
+                            <p>The world is dangerous. You learn to look out for yourself.</p>
+                        </div>
+                    </div>
+                    <div class="stage">
+                        <span class="stage-num">3</span>
+                        <div class="stage-content">
+                            <strong>Conformist</strong>
+                            <p>You are your group. Its rules feel like reality itself.</p>
+                        </div>
+                    </div>
+                    <div class="stage">
+                        <span class="stage-num">4</span>
+                        <div class="stage-content">
+                            <strong>Self-Aware</strong>
+                            <p>You notice an inner life that doesn't match the exterior.</p>
+                        </div>
+                    </div>
+                    <div class="stage">
+                        <span class="stage-num">5</span>
+                        <div class="stage-content">
+                            <strong>Conscientious</strong>
+                            <p>You build your own system of principles and hold yourself accountable.</p>
+                        </div>
+                    </div>
+                    <div class="stage">
+                        <span class="stage-num">6</span>
+                        <div class="stage-content">
+                            <strong>Individualist</strong>
+                            <p>You see your principles were shaped by context. You hold them loosely.</p>
+                        </div>
+                    </div>
+                    <div class="stage">
+                        <span class="stage-num">7</span>
+                        <div class="stage-content">
+                            <strong>Strategist</strong>
+                            <p>You work with systems while aware of your own involvement in them.</p>
+                        </div>
+                    </div>
+                    <div class="stage">
+                        <span class="stage-num">8</span>
+                        <div class="stage-content">
+                            <strong>Construct-Aware</strong>
+                            <p>You see all frameworks, including your identity, as useful fictions.</p>
+                        </div>
+                    </div>
+                    <div class="stage">
+                        <span class="stage-num">9</span>
+                        <div class="stage-content">
+                            <strong>Unitive</strong>
+                            <p>Separation between self and life dissolves.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Most readers hover between stages 4-8. Moving through them follows a pattern you can navigate consciously.</p>
+            </div>
+        </section>
+
+        <!-- Concept V -->
+        <section class="learn-section">
+            <div class="learn-container">
+                <span class="concept-num">V</span>
+                <h2>Intelligence is getting what you want</h2>
+                
+                <blockquote>
+                    "The only real test of intelligence is if you get what you want out of life."
+                    <cite>— Naval Ravikant</cite>
+                </blockquote>
+                
+                <p>There is a formula for success:</p>
+                
+                <ul class="formula-list">
+                    <li><strong>Agency</strong> — Your likelihood to act toward goals</li>
+                    <li><strong>Opportunity</strong> — Goals that bear fruit</li>
+                    <li><strong>Intelligence</strong> — Your ability to iterate and learn</li>
+                </ul>
+                
+                <p>Cybernetics (from Greek "to steer") illustrates the properties of intelligent systems:</p>
+                
+                <ol class="numbered-list">
+                    <li>Have a goal</li>
+                    <li>Act toward that goal</li>
+                    <li>Sense where you are</li>
+                    <li>Compare it to the goal</li>
+                    <li>Act again based on feedback</li>
+                </ol>
+                
+                <div class="callout">
+                    <p>High intelligence is the ability to iterate, persist, and understand the big picture. <strong>The mark of low intelligence is the inability to learn from mistakes.</strong></p>
+                </div>
+                
+                <p>The reality is you can achieve any goal you set your mind to. There is a series of choices that lead to any outcome. You may not have the resources yet, but intelligence means knowing they can be acquired.</p>
+            </div>
+        </section>
+
+        <!-- Concept VI -->
+        <section class="learn-section">
+            <div class="learn-container">
+                <span class="concept-num">VI</span>
+                <h2>The three phases of transformation</h2>
+                
+                <p>When people successfully flip their identity, it happens fast after a buildup of tension. Three phases:</p>
+                
+                <div class="phases">
+                    <div class="phase">
+                        <span class="phase-num">1</span>
+                        <div class="phase-content">
+                            <strong>Dissonance</strong>
+                            <p>They feel like they don't belong in their current life. They become sufficiently fed up.</p>
+                        </div>
+                    </div>
+                    <div class="phase">
+                        <span class="phase-num">2</span>
+                        <div class="phase-content">
+                            <strong>Uncertainty</strong>
+                            <p>They don't know what comes next. They experiment or get lost.</p>
+                        </div>
+                    </div>
+                    <div class="phase">
+                        <span class="phase-num">3</span>
+                        <div class="phase-content">
+                            <strong>Discovery</strong>
+                            <p>They discover what they want and make 6 years of progress in 6 months.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="callout">
+                    <p>Our goal: reach dissonance, navigate uncertainty, and discover what you truly want with overwhelming clarity.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Concept VII -->
+        <section class="learn-section">
+            <div class="learn-container">
+                <span class="concept-num">VII</span>
+                <h2>Turn your life into a video game</h2>
+                
+                <blockquote>
+                    "The optimal state of inner experience is one in which there is order in consciousness."
+                    <cite>— Mihaly Csikszentmihalyi</cite>
+                </blockquote>
+                
+                <p>Games are the poster child for obsession, enjoyment, and flow states. They have all the components that lead to focus and clarity.</p>
+                
+                <div class="game-framework">
+                    <div class="game-item">
+                        <span class="game-label">Anti-Vision</span>
+                        <span class="game-meta">What's at stake</span>
+                        <p>The life you never want to experience. What happens if you lose.</p>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-label">Vision</span>
+                        <span class="game-meta">How you win</span>
+                        <p>The ideal life you're building toward.</p>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-label">1 Year Goal</span>
+                        <span class="game-meta">The mission</span>
+                        <p>Your sole priority in life.</p>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-label">1 Month Project</span>
+                        <span class="game-meta">Boss fight</span>
+                        <p>How you gain XP and acquire loot.</p>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-label">Daily Levers</span>
+                        <span class="game-meta">Quests</span>
+                        <p>The daily process that unlocks opportunities.</p>
+                    </div>
+                    <div class="game-item">
+                        <span class="game-label">Constraints</span>
+                        <span class="game-meta">Rules</span>
+                        <p>Limitations that encourage creativity.</p>
+                    </div>
+                </div>
+                
+                <p>These act as concentric circles—a forcefield—that guard your mind from distractions. The more you play, the stronger this force becomes, until it becomes who you are.</p>
+            </div>
+        </section>
+
+        <!-- The Protocol Overview -->
+        <section class="learn-section protocol-overview">
+            <div class="learn-container">
                 <h2>The Protocol</h2>
-                <p class="subtitle">Three sessions to excavate truth and create direction</p>
-
-                <div class="protocol-tabs">
-                    <button class="tab-btn active" data-tab="morning">Morning Session</button>
-                    <button class="tab-btn" data-tab="day">Throughout Day</button>
-                    <button class="tab-btn" data-tab="evening">Evening Session</button>
-                </div>
-
-                <!-- Morning Session -->
-                <div class="protocol-content active" data-content="morning">
-                    <div class="session-header">
-                        <h3>Part 1: Psychological Excavation</h3>
-                        <p>Time required: 30-45 minutes</p>
-                        <p>Set aside time to answer these without distraction. Do not outsource this to AI. Break past your mental limiters.</p>
+                <p class="protocol-intro">One full day to reset your life and launch into a season of intense progress.</p>
+                
+                <div class="protocol-parts">
+                    <div class="protocol-part">
+                        <span class="part-time">Morning</span>
+                        <strong>Psychological Excavation</strong>
+                        <p>30-45 minutes of deep introspection. Create your anti-vision and vision.</p>
                     </div>
-
-                    <div class="questions-container">
-                        <div class="question-group">
-                            <h4>Uncovering Hidden Pain</h4>
-
-                            <div class="question-block">
-                                <label>1. What is the dull and persistent dissatisfaction you've learned to live with? Not deep suffering, but what you tolerate.</label>
-                                <textarea class="response-area" data-save="morning-q1" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>2. What do you complain about repeatedly but never actually change? List three complaints from the past year.</label>
-                                <textarea class="response-area" data-save="morning-q2" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>3. For each complaint: What would someone who watched your behavior (not your words) conclude that you actually want?</label>
-                                <textarea class="response-area" data-save="morning-q3" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>4. What truth about your current life would be unbearable to admit to someone you deeply respect?</label>
-                                <textarea class="response-area" data-save="morning-q4" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-                        </div>
-
-                        <div class="question-group">
-                            <h4>Creating Your Anti-Vision</h4>
-                            <p class="group-intro">Now we create brutal awareness of the life you do not want to live.</p>
-
-                            <div class="question-block">
-                                <label>5. If nothing changes for five years, describe an average Tuesday. Where do you wake up? What does your body feel like? First thought? Who's around? What do you do 9am-6pm? How do you feel at 10pm?</label>
-                                <textarea class="response-area" data-save="morning-q5" rows="6"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>6. Now ten years. What have you missed? What opportunities closed? Who gave up on you? What do people say about you when you're not in the room?</label>
-                                <textarea class="response-area" data-save="morning-q6" rows="6"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>7. You're at the end of your life. You lived the safe version. Never broke the pattern. What was the cost? What did you never let yourself feel, try, or become?</label>
-                                <textarea class="response-area" data-save="morning-q7" rows="6"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>8. Who in your life is already living the future you just described? Someone 5, 10, 20 years ahead on the same trajectory? What do you feel thinking about becoming them?</label>
-                                <textarea class="response-area" data-save="morning-q8" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>9. What identity would you have to give up to actually change? ("I am the type of person who...") What would it cost you socially?</label>
-                                <textarea class="response-area" data-save="morning-q9" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>10. What is the most embarrassing reason you haven't changed? The one that makes you sound weak, scared, or lazy rather than reasonable?</label>
-                                <textarea class="response-area" data-save="morning-q10" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>11. If your current behavior is self-protection, what exactly are you protecting? And what is that protection costing you?</label>
-                                <textarea class="response-area" data-save="morning-q11" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-                        </div>
-
-                        <div class="question-group">
-                            <h4>Creating Your Vision</h4>
-                            <p class="group-intro">Orient that energy in a positive direction. Create a minimum viable vision.</p>
-
-                            <div class="question-block">
-                                <label>12. Forget practicality. If you could snap your fingers and be living a different life in three years, what do you actually want? What does an average Tuesday look like? (Same detail as question 5)</label>
-                                <textarea class="response-area" data-save="morning-q12" rows="6"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>13. What would you have to believe about yourself for that life to feel natural rather than forced? Write the identity statement: "I am the type of person who..."</label>
-                                <textarea class="response-area" data-save="morning-q13" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>14. What is one thing you would do this week if you were already that person?</label>
-                                <textarea class="response-area" data-save="morning-q14" rows="3"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-                        </div>
+                    <div class="protocol-part">
+                        <span class="part-time">Throughout Day</span>
+                        <strong>Interrupting Autopilot</strong>
+                        <p>6 timed reminders to break unconscious patterns.</p>
                     </div>
-
-                    <div class="session-complete">
-                        <p>Morning session responses auto-saved.</p>
-                        <button class="cta-button" id="setup-reminders-btn">Set Up Day Interrupts</button>
+                    <div class="protocol-part">
+                        <span class="part-time">Evening</span>
+                        <strong>Synthesizing Insight</strong>
+                        <p>30-45 minutes to integrate insights and create direction.</p>
                     </div>
                 </div>
-
-                <!-- Day Session -->
-                <div class="protocol-content" data-content="day">
-                    <div class="session-header">
-                        <h3>Part 2: Interrupting Autopilot</h3>
-                        <p>These aren't cute journaling exercises. We need to break unconscious patterns.</p>
-                        <p>Schedule these reminders throughout your day to force pattern breaks and conscious contemplation.</p>
-                    </div>
-
-                    <div class="reminder-setup">
-                        <div class="reminder-info">
-                            <h4>How This Works:</h4>
-                            <ul>
-                                <li>Schedule 6 reminders at random times</li>
-                                <li>Browser notifications will appear with each question</li>
-                                <li>Stop what you're doing and contemplate</li>
-                                <li>Write your immediate thoughts</li>
-                            </ul>
-                        </div>
-
-                        <div class="reminder-scheduler">
-                            <h4>Schedule Your Interrupts:</h4>
-
-                            <div class="reminder-item">
-                                <span class="reminder-time">11:00 AM</span>
-                                <input type="time" class="time-input" data-reminder="1" value="11:00" />
-                                <span class="reminder-question">What am I avoiding right now by doing what I'm doing?</span>
-                            </div>
-
-                            <div class="reminder-item">
-                                <span class="reminder-time">1:30 PM</span>
-                                <input type="time" class="time-input" data-reminder="2" value="13:30" />
-                                <span class="reminder-question">If someone filmed the last two hours, what would they conclude I want from my life?</span>
-                            </div>
-
-                            <div class="reminder-item">
-                                <span class="reminder-time">3:15 PM</span>
-                                <input type="time" class="time-input" data-reminder="3" value="15:15" />
-                                <span class="reminder-question">Am I moving toward the life I hate or the life I want?</span>
-                            </div>
-
-                            <div class="reminder-item">
-                                <span class="reminder-time">5:00 PM</span>
-                                <input type="time" class="time-input" data-reminder="4" value="17:00" />
-                                <span class="reminder-question">What's the most important thing I'm pretending isn't important?</span>
-                            </div>
-
-                            <div class="reminder-item">
-                                <span class="reminder-time">7:30 PM</span>
-                                <input type="time" class="time-input" data-reminder="5" value="19:30" />
-                                <span class="reminder-question">What did I do today out of identity protection rather than genuine desire?</span>
-                            </div>
-
-                            <div class="reminder-item">
-                                <span class="reminder-time">9:00 PM</span>
-                                <input type="time" class="time-input" data-reminder="6" value="21:00" />
-                                <span class="reminder-question">When did I feel most alive today? When did I feel most dead?</span>
-                            </div>
-
-                            <button class="cta-button" id="activate-reminders-btn">Activate Reminders</button>
-                            <p class="reminder-status" id="reminder-status"></p>
-                        </div>
-
-                        <div class="contemplation-prompts">
-                            <h4>Additional Contemplation (During Commutes, Walks, Rest):</h4>
-                            <ul>
-                                <li>What would change if I stopped needing people to see me as [your protected identity]?</li>
-                                <li>Where in my life am I trading aliveness for safety?</li>
-                                <li>What's the smallest version of the person I want to become that I could be tomorrow?</li>
-                            </ul>
-                        </div>
-
-                        <div class="day-responses">
-                            <h4>Capture Your Insights:</h4>
-                            <textarea class="response-area" data-save="day-insights" rows="8" placeholder="As insights arise throughout the day, capture them here..."></textarea>
-                            <div class="word-count">0 words</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Evening Session -->
-                <div class="protocol-content" data-content="evening">
-                    <div class="session-header">
-                        <h3>Part 3: Synthesizing Insight</h3>
-                        <p>Time required: 30-45 minutes</p>
-                        <p>If you followed the process, you've had at least one profound insight. Now we integrate and act.</p>
-                    </div>
-
-                    <div class="questions-container">
-                        <div class="question-group">
-                            <h4>Integration</h4>
-
-                            <div class="question-block">
-                                <label>1. After today, what feels most true about why you've been stuck?</label>
-                                <textarea class="response-area" data-save="evening-q1" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>2. What is the actual enemy? Name it clearly. Not circumstances. Not other people. The internal pattern or belief running the show.</label>
-                                <textarea class="response-area" data-save="evening-q2" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>3. Write a single sentence that captures what you refuse to let your life become. Your anti-vision compressed. It should make you feel something.</label>
-                                <textarea class="response-area" data-save="evening-q3" rows="3"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>4. Write a single sentence that captures what you're building toward. Your vision MVP, knowing it will evolve.</label>
-                                <textarea class="response-area" data-save="evening-q4" rows="3"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-                        </div>
-
-                        <div class="question-group">
-                            <h4>Creating Goals As Lenses</h4>
-                            <p class="group-intro">These aren't finish lines. They're points of view that guide action and state.</p>
-
-                            <div class="question-block">
-                                <label>5. One-year lens: What would have to be true in one year for you to know you've broken the old pattern? One concrete thing.</label>
-                                <textarea class="response-area" data-save="evening-q5" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>6. One-month lens: What would have to be true in one month for the one-year lens to remain possible?</label>
-                                <textarea class="response-area" data-save="evening-q6" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-
-                            <div class="question-block">
-                                <label>7. Daily lens: What are 2-3 actions you can timeblock tomorrow that the person you're becoming would simply do?</label>
-                                <textarea class="response-area" data-save="evening-q7" rows="4"></textarea>
-                                <div class="word-count">0 words</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="session-complete">
-                        <p>Evening session responses auto-saved.</p>
-                        <button class="cta-button nav-btn" data-next="gameplan">Create Your Game Plan →</button>
-                    </div>
-                </div>
+                
+                <button class="start-execute-btn" id="start-execute-bottom">Begin the Protocol</button>
             </div>
         </section>
 
-        <!-- Game Plan Section -->
-        <section id="gameplan" class="section">
-            <div class="container">
-                <h2>Your Game Plan</h2>
-                <p class="subtitle">Synthesize everything into the 6-component framework</p>
-
-                <div class="gameplan-grid">
-                    <div class="gameplan-card">
-                        <div class="card-header">
-                            <h3>Anti-Vision</h3>
-                            <span class="card-label">What's at stake</span>
-                        </div>
-                        <textarea class="response-area" data-save="gameplan-antivision" rows="4" placeholder="The life you refuse to let yourself live..."></textarea>
-                        <div class="word-count">0 words</div>
-                    </div>
-
-                    <div class="gameplan-card">
-                        <div class="card-header">
-                            <h3>Vision</h3>
-                            <span class="card-label">How you win</span>
-                        </div>
-                        <textarea class="response-area" data-save="gameplan-vision" rows="4" placeholder="The life you're building toward..."></textarea>
-                        <div class="word-count">0 words</div>
-                    </div>
-
-                    <div class="gameplan-card">
-                        <div class="card-header">
-                            <h3>1 Year Goal</h3>
-                            <span class="card-label">The mission</span>
-                        </div>
-                        <textarea class="response-area" data-save="gameplan-year" rows="4" placeholder="Your sole priority for the next year..."></textarea>
-                        <div class="word-count">0 words</div>
-                    </div>
-
-                    <div class="gameplan-card">
-                        <div class="card-header">
-                            <h3>1 Month Project</h3>
-                            <span class="card-label">Boss fight</span>
-                        </div>
-                        <textarea class="response-area" data-save="gameplan-month" rows="4" placeholder="How you gain XP and acquire loot..."></textarea>
-                        <div class="word-count">0 words</div>
-                    </div>
-
-                    <div class="gameplan-card">
-                        <div class="card-header">
-                            <h3>Daily Levers</h3>
-                            <span class="card-label">Quests</span>
-                        </div>
-                        <textarea class="response-area" data-save="gameplan-daily" rows="4" placeholder="The daily process that unlocks opportunities..."></textarea>
-                        <div class="word-count">0 words</div>
-                    </div>
-
-                    <div class="gameplan-card">
-                        <div class="card-header">
-                            <h3>Constraints</h3>
-                            <span class="card-label">Rules</span>
-                        </div>
-                        <textarea class="response-area" data-save="gameplan-constraints" rows="4" placeholder="What you're NOT willing to sacrifice..."></textarea>
-                        <div class="word-count">0 words</div>
-                    </div>
-                </div>
-
-                <div class="export-section">
-                    <h3>Export Your Work</h3>
-                    <p>Save your complete protocol responses and game plan.</p>
-                    <div class="export-buttons">
-                        <button class="cta-button" id="export-text-btn">Export as Text</button>
-                        <button class="cta-button" id="export-pdf-btn">Export as PDF</button>
-                    </div>
-                </div>
-
-                <div class="completion-message">
-                    <h3>This is just the beginning.</h3>
-                    <p>You've done the uncomfortable work. You've excavated truth. You've created direction.</p>
-                    <p>Now comes the part that matters: <strong>movement.</strong></p>
-                    <p>Remember: These aren't finish lines. They're lenses. Points of view that will evolve as you do.</p>
-                    <p class="final-quote">"Trust only movement. Life happens at the level of events, not of words."</p>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <footer>
-        <p>All responses saved locally in your browser. No data is transmitted.</p>
-        <p>&copy; 2026 The Protocol. Built for genuine transformation.</p>
+    <!-- ========== EXECUTE MODE ========== -->
+    <main id="execute-mode" class="mode-content">
+        
+        <!-- Persistent synthesis bar -->
+        <!-- Entry Point -->
+        <section class="block" id="block-intro">
+            <div class="block-content">
+                <h1>Ready to begin.</h1>
+                <p class="lead">This requires one full day. Morning introspection. Day interrupts. Evening synthesis.</p>
+                
+                <div class="warning">
+                    <p>Your responses stay local. Nothing is transmitted.</p>
+                    <p>Do not outsource this to AI. Break past your mental limiters.</p>
+                </div>
+
+                <label class="commitment">
+                    <input type="checkbox" id="commitment" />
+                    <span>I understand this requires genuine effort. I'm ready to do the uncomfortable work.</span>
+                </label>
+
+                <button class="continue-btn" id="begin-btn" disabled>Begin</button>
+            </div>
+        </section>
+
+        <!-- Part 1: Excavation -->
+        <section class="block hidden" id="block-excavation">
+            <div class="block-content">
+                <div class="part-header">
+                    <span class="part-label">Part 1</span>
+                    <h2>Excavation</h2>
+                </div>
+
+                <div class="question-block" id="q1-block">
+                    <label class="question">What is the dull, persistent dissatisfaction you've learned to live with?</label>
+                    <p class="context">Not deep suffering. The thing you tolerate.</p>
+                    <textarea class="response" data-save="q1" rows="3"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="q2-block">
+                    <label class="question">What do you complain about repeatedly but never change?</label>
+                    <p class="context">List three complaints from the past year.</p>
+                    <textarea class="response" data-save="q2" rows="3"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="q3-block">
+                    <label class="question">For each complaint: What would an observer conclude you actually want?</label>
+                    <p class="context">Behavior reveals goals. Not words. What are your actions optimizing for?</p>
+                    <textarea class="response" data-save="q3" rows="3"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="q4-block">
+                    <label class="question">What truth about your life would be unbearable to admit to someone you respect?</label>
+                    <textarea class="response" data-save="q4" rows="3"></textarea>
+                </div>
+
+                <button class="continue-btn hidden" id="continue-antivision">Continue</button>
+            </div>
+        </section>
+
+        <!-- Part 2: Anti-Vision -->
+        <section class="block hidden" id="block-antivision">
+            <div class="block-content">
+                <div class="part-header">
+                    <span class="part-label">Part 2</span>
+                    <h2>Anti-Vision</h2>
+                    <p class="part-context">Create brutal awareness of the life you do not want.</p>
+                </div>
+
+                <div class="question-block" id="q5-block">
+                    <label class="question">If nothing changes for five years, describe an average Tuesday.</label>
+                    <p class="context">Where do you wake up? What does your body feel like? First thought? Who's around? What do you do 9am-6pm?</p>
+                    <textarea class="response" data-save="q5" rows="4"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="q6-block">
+                    <label class="question">Now ten years. What have you missed?</label>
+                    <p class="context">What opportunities closed? Who gave up on you? What do people say when you're not in the room?</p>
+                    <textarea class="response" data-save="q6" rows="4"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="q7-block">
+                    <label class="question">End of life. You lived the safe version. What was the cost?</label>
+                    <p class="context">What did you never let yourself feel, try, or become?</p>
+                    <textarea class="response" data-save="q7" rows="4"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="q8-block">
+                    <label class="question">Who is already living this future you described?</label>
+                    <p class="context">Someone 5, 10, 20 years ahead on the same trajectory. What do you feel thinking about becoming them?</p>
+                    <textarea class="response" data-save="q8" rows="3"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="antivision-synthesis-block">
+                    <label class="question">Compress this into one sentence. The life you refuse.</label>
+                    <p class="context">It should make you feel something.</p>
+                    <input type="text" class="response-line" data-save="antivision-statement" maxlength="200" placeholder="I refuse to become..." />
+                </div>
+
+                <button class="continue-btn hidden" id="continue-vision">Continue</button>
+            </div>
+        </section>
+
+        <!-- Part 3: Vision -->
+        <section class="block hidden" id="block-vision">
+            <div class="block-content">
+                <div class="part-header">
+                    <span class="part-label">Part 3</span>
+                    <h2>Vision</h2>
+                    <p class="part-context">Orient the energy in a positive direction.</p>
+                </div>
+
+                <div class="question-block" id="q9-block">
+                    <label class="question">What identity would you have to give up to actually change?</label>
+                    <p class="context">"I am the type of person who..." — What would it cost you socially?</p>
+                    <textarea class="response" data-save="q9" rows="3"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="q10-block">
+                    <label class="question">What is the most embarrassing reason you haven't changed?</label>
+                    <p class="context">The one that makes you sound weak, scared, or lazy. Not reasonable.</p>
+                    <textarea class="response" data-save="q10" rows="3"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="q11-block">
+                    <label class="question">If your behavior is self-protection, what exactly are you protecting?</label>
+                    <p class="context">And what is that protection costing you?</p>
+                    <textarea class="response" data-save="q11" rows="3"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="q12-block">
+                    <label class="question">Forget practicality. Three years from now, what do you actually want?</label>
+                    <p class="context">Describe an average Tuesday in that life. Same detail as before.</p>
+                    <textarea class="response" data-save="q12" rows="4"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="q13-block">
+                    <label class="question">What would you have to believe about yourself for that life to feel natural?</label>
+                    <p class="context">Write the identity statement.</p>
+                    <input type="text" class="response-line" data-save="q13" maxlength="150" placeholder="I am the type of person who..." />
+                </div>
+
+                <div class="question-block hidden" id="vision-synthesis-block">
+                    <label class="question">Compress this into one sentence. What you're building toward.</label>
+                    <input type="text" class="response-line" data-save="vision-statement" maxlength="200" placeholder="I am building..." />
+                </div>
+
+                <button class="continue-btn hidden" id="continue-interrupts">Continue</button>
+            </div>
+        </section>
+
+        <!-- Part 4: Day Interrupts -->
+        <section class="block hidden" id="block-interrupts">
+            <div class="block-content">
+                <div class="part-header">
+                    <span class="part-label">Part 4</span>
+                    <h2>Interrupt Autopilot</h2>
+                    <p class="part-context">Schedule 6 pattern breaks throughout your day.</p>
+                </div>
+
+                <div class="interrupts-grid">
+                    <div class="interrupt-item">
+                        <input type="time" class="time-input" data-reminder="1" value="11:00" />
+                        <span class="interrupt-q">What am I avoiding right now?</span>
+                    </div>
+                    <div class="interrupt-item">
+                        <input type="time" class="time-input" data-reminder="2" value="13:30" />
+                        <span class="interrupt-q">If someone filmed the last two hours, what would they conclude I want?</span>
+                    </div>
+                    <div class="interrupt-item">
+                        <input type="time" class="time-input" data-reminder="3" value="15:15" />
+                        <span class="interrupt-q">Am I moving toward the life I hate or the life I want?</span>
+                    </div>
+                    <div class="interrupt-item">
+                        <input type="time" class="time-input" data-reminder="4" value="17:00" />
+                        <span class="interrupt-q">What's the most important thing I'm pretending isn't important?</span>
+                    </div>
+                    <div class="interrupt-item">
+                        <input type="time" class="time-input" data-reminder="5" value="19:30" />
+                        <span class="interrupt-q">What did I do today out of identity protection rather than genuine desire?</span>
+                    </div>
+                    <div class="interrupt-item">
+                        <input type="time" class="time-input" data-reminder="6" value="21:00" />
+                        <span class="interrupt-q">When did I feel most alive today? When did I feel most dead?</span>
+                    </div>
+                </div>
+
+                <button class="continue-btn" id="activate-interrupts">Activate Reminders</button>
+                <p class="status-text" id="interrupt-status"></p>
+
+                <div class="question-block" style="margin-top: 48px;">
+                    <label class="question">Capture insights as they arise throughout the day.</label>
+                    <textarea class="response" data-save="day-insights" rows="6" placeholder="As insights arise..."></textarea>
+                </div>
+
+                <button class="continue-btn hidden" id="continue-synthesis">Continue to Evening Synthesis</button>
+            </div>
+        </section>
+
+        <!-- Part 5: Synthesis -->
+        <section class="block hidden" id="block-synthesis">
+            <div class="block-content">
+                <div class="part-header">
+                    <span class="part-label">Part 5</span>
+                    <h2>Synthesis</h2>
+                    <p class="part-context">Integrate and act.</p>
+                </div>
+
+                <div class="question-block" id="s1-block">
+                    <label class="question">After today, what feels most true about why you've been stuck?</label>
+                    <textarea class="response" data-save="s1" rows="3"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="s2-block">
+                    <label class="question">What is the actual enemy?</label>
+                    <p class="context">Not circumstances. Not other people. The internal pattern running the show.</p>
+                    <input type="text" class="response-line" data-save="s2" maxlength="150" />
+                </div>
+
+                <div class="question-block hidden" id="s3-block">
+                    <label class="question">One-year lens: What would have to be true for you to know you've broken the pattern?</label>
+                    <p class="context">One concrete thing.</p>
+                    <textarea class="response" data-save="s3" rows="3"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="s4-block">
+                    <label class="question">One-month lens: What would have to be true for the one-year to remain possible?</label>
+                    <textarea class="response" data-save="s4" rows="3"></textarea>
+                </div>
+
+                <div class="question-block hidden" id="s5-block">
+                    <label class="question">Tomorrow: What are 2-3 actions the person you're becoming would simply do?</label>
+                    <textarea class="response" data-save="s5" rows="3"></textarea>
+                </div>
+
+                <button class="continue-btn hidden" id="continue-final">Complete</button>
+            </div>
+        </section>
+
+        <!-- Final Output -->
+        <section class="block hidden" id="block-final">
+            <div class="block-content">
+                <div class="final-output">
+                    <div class="output-row">
+                        <span class="output-label">Anti-Vision</span>
+                        <p class="output-text" id="final-antivision">—</p>
+                    </div>
+                    <div class="output-row">
+                        <span class="output-label">Vision</span>
+                        <p class="output-text" id="final-vision">—</p>
+                    </div>
+                    <div class="output-row">
+                        <span class="output-label">The Enemy</span>
+                        <p class="output-text" id="final-enemy">—</p>
+                    </div>
+                    <div class="output-row">
+                        <span class="output-label">One Year</span>
+                        <p class="output-text" id="final-year">—</p>
+                    </div>
+                    <div class="output-row">
+                        <span class="output-label">One Month</span>
+                        <p class="output-text" id="final-month">—</p>
+                    </div>
+                    <div class="output-row">
+                        <span class="output-label">Tomorrow</span>
+                        <p class="output-text" id="final-tomorrow">—</p>
+                    </div>
+                </div>
+
+                <p class="final-note">This is just the beginning. Movement is what matters now.</p>
+                
+                <button class="export-btn" id="export-btn">Export</button>
+            </div>
+        </section>
+
+            </main>
+
+    <!-- Synthesis Modal Overlay -->
+    <div class="synthesis-modal" id="synthesis-modal">
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">×</button>
+            <div class="synthesis-cards">
+                <div class="synthesis-card">
+                    <div class="card-header">
+                        <span class="card-label">Anti-Vision</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="synthesis-text" id="synthesis-antivision">—</div>
+                    </div>
+                </div>
+                <div class="synthesis-card">
+                    <div class="card-header">
+                        <span class="card-label">Vision</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="synthesis-text" id="synthesis-vision">—</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Synthesis Toggle Button (sticky bottom) -->
+    <button class="synthesis-toggle-btn" id="synthesis-toggle-btn">Anti-Vision & Vision</button>
+
+    <!-- Sticky Footer -->
+    <footer class="sticky-footer">
+        <div class="footer-inner">
+            <a href="https://x.com/thedankoe" target="_blank" rel="noopener">@thedankoe</a>
+            <span class="footer-divider">·</span>
+            <span>Responses saved locally</span>
+            <button class="reset-btn" id="reset-btn">Reset</button>
+        </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
