@@ -413,14 +413,58 @@
     }
 
     function loadSavedResponses() {
+        // First, reveal all blocks that have saved content
+        const flows = {
+            'q1': { next: 'q2-block', revealBtn: null },
+            'q2': { next: 'q3-block', revealBtn: null },
+            'q3': { next: 'q4-block', revealBtn: null },
+            'q4': { next: null, revealBtn: 'continue-antivision' },
+            'q5': { next: 'q6-block', revealBtn: null },
+            'q6': { next: 'q7-block', revealBtn: null },
+            'q7': { next: 'q8-block', revealBtn: null },
+            'q8': { next: 'antivision-synthesis-block', revealBtn: null },
+            'antivision-statement': { next: null, revealBtn: 'continue-vision', updateSynthesis: 'antivision' },
+            'q9': { next: 'q10-block', revealBtn: null },
+            'q10': { next: 'q11-block', revealBtn: null },
+            'q11': { next: 'q12-block', revealBtn: null },
+            'q12': { next: 'q13-block', revealBtn: null },
+            'q13': { next: 'vision-synthesis-block', revealBtn: null },
+            'vision-statement': { next: null, revealBtn: 'continue-interrupts', updateSynthesis: 'vision' },
+            's1': { next: 's2-block', revealBtn: null },
+            's2': { next: 's3-block', revealBtn: null },
+            's3': { next: 's4-block', revealBtn: null },
+            's4': { next: 's5-block', revealBtn: null },
+            's5': { next: null, revealBtn: 'continue-final' },
+        };
+
+        // Reveal all blocks that have saved content
         document.querySelectorAll('.response, .response-line').forEach(input => {
             const key = input.dataset.save;
             if (!key) return;
 
             const saved = localStorage.getItem(`protocol-${key}`);
-            if (saved) {
+            if (saved && saved.trim().length > 0) {
                 input.value = saved;
-                input.dispatchEvent(new Event('input'));
+                
+                // Reveal this block's parent if hidden
+                const questionBlock = input.closest('.question-block');
+                if (questionBlock) {
+                    questionBlock.classList.remove('hidden');
+                }
+                
+                // Reveal the next block if this one has content
+                if (flows[key] && flows[key].next && saved.trim().length > 10) {
+                    const nextEl = document.getElementById(flows[key].next);
+                    if (nextEl) {
+                        nextEl.classList.remove('hidden');
+                    }
+                }
+                
+                // Reveal parent block if needed
+                const parentBlock = input.closest('.block');
+                if (parentBlock) {
+                    parentBlock.classList.remove('hidden');
+                }
             }
         });
 
@@ -435,10 +479,10 @@
             updateSynthesisBar('vision', savedVision);
         }
 
-        // Scroll to last filled field after a delay to ensure blocks are revealed
+        // Scroll to last filled field after a delay to ensure all blocks are revealed
         setTimeout(() => {
             scrollToLastFilledField();
-        }, 300);
+        }, 500);
     }
 
     function scrollToLastFilledField() {
