@@ -285,6 +285,7 @@ strong {
     display: inline-block;
     margin-top: 24px;
     text-transform: uppercase;
+    border-radius: 8px;
 }
 
 .btn:hover,
@@ -310,6 +311,7 @@ strong {
     transition: opacity 0.2s ease;
     text-transform: uppercase;
     display: inline-block;
+    border-radius: 8px;
 }
 
 [data-theme="light"] .scroll-btn {
@@ -345,6 +347,7 @@ strong {
     transition: opacity 0.2s ease;
     margin-top: 48px;
     text-transform: uppercase;
+    border-radius: 8px;
 }
 
 .export-btn:hover {
@@ -383,6 +386,7 @@ blockquote cite {
     padding: 24px;
     background: #1a1a1a;
     border: none;
+    border-radius: 8px;
 }
 
 [data-theme="light"] .warning {
@@ -544,7 +548,7 @@ blockquote cite {
     border: 1px solid rgba(0, 0, 0, 0.2);
     appearance: none;
     -webkit-appearance: none;
-    border-radius: 2px;
+    border-radius: 8px;
 }
 
 .commitment input[type="checkbox"]:checked {
@@ -665,7 +669,7 @@ blockquote cite {
     border: none;
     appearance: none;
     -webkit-appearance: none;
-    border-radius: 2px;
+    border-radius: 8px;
     cursor: pointer;
     text-transform: uppercase;
     min-width: 50px;
@@ -746,6 +750,7 @@ blockquote cite {
     text-transform: uppercase;
     transition: opacity 0.2s ease;
     display: none;
+    border-radius: 8px;
 }
 
 [data-theme="light"] .synthesis-toggle-btn {
@@ -838,7 +843,7 @@ blockquote cite {
 
 .synthesis-card {
     background: #222;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
