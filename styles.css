@@ -817,17 +817,17 @@ blockquote cite {
 
 .modal-close {
     position: absolute;
-    top: -48px;
-    right: 0;
+    top: 16px;
+    right: 16px;
     background: transparent;
     border: none;
     color: var(--fg);
-    font-size: 36px;
+    font-size: 24px;
     line-height: 1;
     cursor: pointer;
     padding: 0;
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -835,6 +835,7 @@ blockquote cite {
     transition: opacity 0.2s ease;
     text-transform: none;
     font-weight: 300;
+    z-index: 10;
 }
 
 .modal-close:hover {
@@ -847,6 +848,7 @@ blockquote cite {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 [data-theme="light"] .synthesis-card {
