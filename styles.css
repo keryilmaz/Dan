@@ -812,12 +812,13 @@ blockquote cite {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(15, 15, 15, 0.9);
-    backdrop-filter: blur(8px);
+    background: rgba(15, 15, 15, 0.5);
+    backdrop-filter: blur(12px);
 }
 
 [data-theme="light"] .modal-backdrop {
-    background: rgba(245, 245, 245, 0.95);
+    background: rgba(245, 245, 245, 0.6);
+    backdrop-filter: blur(12px);
 }
 
 .modal-content {
@@ -840,7 +841,7 @@ blockquote cite {
     right: 16px;
     background: transparent;
     border: none;
-    color: var(--fg);
+    color: #000;
     font-size: 24px;
     line-height: 1;
     cursor: pointer;
@@ -862,24 +863,22 @@ blockquote cite {
 }
 
 .synthesis-card {
-    background: #0a0a0a;
+    background: #fff;
     border-radius: 8px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     position: relative;
+    color: #000;
 }
 
 [data-theme="light"] .synthesis-card {
-    background: #d0d0d0;
+    background: #fff;
+    color: #000;
 }
 
 .synthesis-tabs {
     display: flex;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-[data-theme="light"] .synthesis-tabs {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -890,7 +889,7 @@ blockquote cite {
     padding: 20px 24px;
     font-family: inherit;
     font-size: 12px;
-    color: var(--fg);
+    color: #000;
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -905,7 +904,7 @@ blockquote cite {
 
 .synthesis-tab.active {
     opacity: 1;
-    border-bottom-color: var(--fg);
+    border-bottom-color: #000;
 }
 
 .tab-content {
@@ -922,7 +921,7 @@ blockquote cite {
 .synthesis-text {
     font-size: 12px;
     line-height: 1.8;
-    color: var(--fg);
+    color: #000;
     opacity: 0.9;
     white-space: pre-wrap;
     word-wrap: break-word;
