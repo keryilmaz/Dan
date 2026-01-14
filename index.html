@@ -636,22 +636,16 @@
         <div class="modal-backdrop" id="modal-backdrop"></div>
         <div class="modal-content">
             <button class="modal-close" id="modal-close">×</button>
-            <div class="synthesis-cards">
-                <div class="synthesis-card">
-                    <div class="card-header">
-                        <span class="card-label">Anti-Vision</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="synthesis-text" id="synthesis-antivision">—</div>
-                    </div>
+            <div class="synthesis-card">
+                <div class="synthesis-tabs">
+                    <button class="synthesis-tab active" data-tab="antivision">Anti-Vision</button>
+                    <button class="synthesis-tab" data-tab="vision">Vision</button>
                 </div>
-                <div class="synthesis-card">
-                    <div class="card-header">
-                        <span class="card-label">Vision</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="synthesis-text" id="synthesis-vision">—</div>
-                    </div>
+                <div class="tab-content active" id="tab-antivision">
+                    <div class="synthesis-text" id="synthesis-antivision">—</div>
+                </div>
+                <div class="tab-content" id="tab-vision">
+                    <div class="synthesis-text" id="synthesis-vision">—</div>
                 </div>
             </div>
         </div>

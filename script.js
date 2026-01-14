@@ -56,6 +56,24 @@
                 closeModal();
             }
         });
+
+        // Tab switching
+        const tabButtons = document.querySelectorAll('.synthesis-tab');
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabName = btn.dataset.tab;
+                
+                // Update active tab button
+                tabButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Update active tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(`tab-${tabName}`)?.classList.add('active');
+            });
+        });
     }
 
     function closeModal() {
