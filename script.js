@@ -530,13 +530,22 @@
             const hourSelect = picker.querySelector('.time-hour');
             const minuteSelect = picker.querySelector('.time-minute');
             
-            // Load saved time
+            // Load saved time or use default from data-time
             const savedTime = localStorage.getItem(`protocol-reminder-${reminderId}`);
-            if (savedTime) {
-                const [hours, minutes] = savedTime.split(':');
-                hourSelect.value = hours.padStart(2, '0');
-                minuteSelect.value = minutes.padStart(2, '0');
-            }
+            const defaultTime = picker.dataset.time || '11:00';
+            const timeToUse = savedTime || defaultTime;
+            
+            const [hours, minutes] = timeToUse.split(':');
+            hourSelect.value = hours.padStart(2, '0');
+            // Round minutes to nearest 15, 30, or 45 (or 00)
+            const min = parseInt(minutes);
+            let roundedMin = '00';
+            if (min <= 7) roundedMin = '00';
+            else if (min <= 22) roundedMin = '15';
+            else if (min <= 37) roundedMin = '30';
+            else if (min <= 52) roundedMin = '45';
+            else roundedMin = '00';
+            minuteSelect.value = roundedMin;
             
             // Save on change
             const saveTime = () => {
