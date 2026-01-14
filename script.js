@@ -30,6 +30,7 @@
         setupAutoSave();
         setupInterrupts();
         setupExport();
+        setupInfoIcons();
         restoreMode();
     }
 
@@ -838,6 +839,19 @@
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+    }
+
+    // Info Icons
+    function setupInfoIcons() {
+        document.querySelectorAll('.info-icon').forEach(icon => {
+            const infoText = icon.getAttribute('data-info');
+            if (infoText) {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'info-tooltip';
+                tooltip.textContent = infoText;
+                icon.appendChild(tooltip);
+            }
+        });
     }
 
     // Start
