@@ -755,11 +755,12 @@ blockquote cite {
 
 .modal-content {
     position: relative;
-    max-width: 900px;
+    max-width: 640px;
     width: 100%;
     z-index: 201;
     transform: scale(0.95);
     transition: transform 0.3s ease;
+    padding: 0 24px;
 }
 
 .synthesis-modal.active .modal-content {
