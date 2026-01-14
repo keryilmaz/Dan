@@ -166,6 +166,10 @@
         const saved = localStorage.getItem('protocol-mode');
         if (saved) {
             switchMode(saved);
+            // Scroll to last filled field after mode is restored
+            setTimeout(() => {
+                scrollToLastFilledField();
+            }, 500);
         }
     }
 
@@ -429,6 +433,42 @@
         }
         if (savedVision) {
             updateSynthesisBar('vision', savedVision);
+        }
+
+        // Scroll to last filled field after a delay to ensure blocks are revealed
+        setTimeout(() => {
+            scrollToLastFilledField();
+        }, 300);
+    }
+
+    function scrollToLastFilledField() {
+        // Only scroll if we're in execute mode
+        if (currentMode !== 'execute') return;
+
+        // Find all filled inputs in execute mode
+        const filledInputs = Array.from(document.querySelectorAll('#execute-mode .response, #execute-mode .response-line'))
+            .filter(input => {
+                const value = input.value.trim();
+                return value.length > 0;
+            });
+
+        if (filledInputs.length === 0) return;
+
+        // Get the last filled input
+        const lastFilled = filledInputs[filledInputs.length - 1];
+        
+        // Find the question block containing this input
+        const questionBlock = lastFilled.closest('.question-block');
+        if (questionBlock) {
+            // Scroll to the question block with some offset for header
+            const headerHeight = 48;
+            const elementPosition = questionBlock.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - headerHeight - 20;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
     }
 
