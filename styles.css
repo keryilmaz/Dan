@@ -861,7 +861,7 @@ blockquote cite {
 }
 
 .synthesis-card {
-    background: #222;
+    background: #0a0a0a;
     border-radius: 8px;
     overflow: hidden;
     display: flex;
@@ -870,7 +870,7 @@ blockquote cite {
 }
 
 [data-theme="light"] .synthesis-card {
-    background: #f5f5f5;
+    background: #e8e8e8;
 }
 
 .synthesis-tabs {
