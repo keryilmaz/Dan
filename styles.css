@@ -201,7 +201,8 @@ header {
 }
 
 /* Hero Section */
-.hero-section {
+.hero-section,
+#block-intro {
     min-height: calc(100vh - 48px);
     display: flex;
     align-items: center;
