@@ -653,15 +653,53 @@ blockquote cite {
     padding: 8px;
     font-family: inherit;
     font-size: 14px;
-    background: transparent;
+    background: #222;
     color: var(--fg);
-    border: 1px solid var(--border);
+    border: none;
     text-transform: uppercase;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+[data-theme="light"] .time-input {
+    background: #ddd;
+    color: var(--fg);
 }
 
 .time-input:focus {
     outline: none;
-    border-color: var(--fg);
+    background: #2a2a2a;
+}
+
+[data-theme="light"] .time-input:focus {
+    background: #d0d0d0;
+}
+
+/* Style time input picker dropdown */
+.time-input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+[data-theme="light"] .time-input::-webkit-calendar-picker-indicator {
+    filter: none;
+    opacity: 0.7;
+}
+
+/* Remove default time input styling */
+.time-input::-webkit-datetime-edit-text,
+.time-input::-webkit-datetime-edit-hour-field,
+.time-input::-webkit-datetime-edit-minute-field {
+    color: var(--fg);
+}
+
+.time-input::-webkit-inner-spin-button,
+.time-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Interrupts Grid */
