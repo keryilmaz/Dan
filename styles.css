@@ -25,6 +25,7 @@
 html {
     scroll-behavior: smooth;
     background: var(--bg);
+    overflow-y: scroll;
 }
 
 body {
@@ -38,6 +39,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
+    scrollbar-gutter: stable;
 }
 
 /* ========== HEADER ========== */
