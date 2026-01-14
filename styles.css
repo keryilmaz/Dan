@@ -138,15 +138,19 @@ header {
 }
 
 .theme-icon-light {
-    display: none;
+    display: none !important;
+}
+
+.theme-icon-dark {
+    display: block;
 }
 
 [data-theme="light"] .theme-icon-dark {
-    display: none;
+    display: none !important;
 }
 
 [data-theme="light"] .theme-icon-light {
-    display: block;
+    display: block !important;
 }
 
 .reset-btn {
